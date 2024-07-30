@@ -17,16 +17,16 @@
     </head>
     <body>
         <div class="container-fluid">
-            <div class="row background-layer">
-                <div class="col-md-3 menu">
+            <div class="row">
+                <div class="col-md-3">
                     <div id="panell" class="position-fixed top-0 end-0">
                     </div>
                 </div>
-                <div class="col-md-7 main">
+                <div class="col-md-7">
                     <div id="panelm">
                     </div>
                 </div>
-                <div class="col-md-2 bar">
+                <div class="col-md-2">
                     <div id="panelr" class="position-fixed top-0 start-0">
                     </div>
                 </div>

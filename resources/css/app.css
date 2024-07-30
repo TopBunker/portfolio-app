@@ -1,18 +1,16 @@
-.background-layer {
-    height: 100vh;
-}
-
-.main #panelm {
-    height: 100vh;
-    opacity: 1;
-}
-
-.menu {
-    opacity: 1;
+#panelm {
     max-height: 100vh;
 }
 
-.bar {
+#panell {
     max-height: 100vh;
-    opacity: 1;
 }
+#panelr {
+    max-height: 100vh;
+}
+
+
+::-webkit-scrollbar {
+    width: 0px;
+}
+  

@@ -31,6 +31,8 @@ Assets.add({alias: "r-1",src: "./storage/images/reveal-1.json"});
 Assets.add({alias: "icon",src: "./storage/images/icons.json"});
 Assets.backgroundLoad(["r-1","icon"]);
 
+
+
 /**
  * Initialise Pixi Application
  */
