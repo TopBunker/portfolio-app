@@ -273,7 +273,16 @@ function pageTwo(){
 
   main.addChild(title);
 
-  app.stage.addChild
+
+  // HTML TEXT
+  let info = `<div class="text-wrap" >One word that I think best sums up my journey as a professional writer is “tortuous.” 
+
+  The first time I read that word, I thought, “Torturous?” 
+  It triggered an innately hostile characterisation, 
+  contrary to the sense of discovery and adventure that “tortuous” inspires.<div> `
+
+  inner.innerHTML =`${info}`;
+
 }pageTwo();
 
 
