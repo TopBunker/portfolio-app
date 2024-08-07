@@ -325,7 +325,7 @@ function pageTwo(){
   let pGrid = grid[3][4];
   let top = yStrt() + pGrid.y;
   let left = xStrt() + pGrid.x;
-  let info = `<p class="pgText" style="position:absolute;top:${top}px;left:${left}px;right:${xStrt()+}px;"> One word that I think best sums up my journey as a professional writer 
+  let info = `<p class="pgText" style="position:absolute;top:${top}px;left:${left}px;right:${xStrt()+app.canvas.width}px;"> One word that I think best sums up my journey as a professional writer 
   is “tortuous.” 
 
   The first time I read that word, I thought, “Torturous?” 
