@@ -11,7 +11,7 @@
         <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
 
          <!-- Styles and scripts-->
-         @vite(["resources/js/app.js"])
+         @vite(["resources/js/app.js","/node_modules/jquery/dist/jquery.js"])
          @vite(["/node_modules/bootstrap/dist/css/bootstrap.min.css"])
 
     </head>

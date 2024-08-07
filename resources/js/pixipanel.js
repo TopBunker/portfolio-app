@@ -1,6 +1,8 @@
 
 import {Application, Assets, Sprite, Container, Graphics, BitmapText, Point, AnimatedSprite} from "pixi.js";
 
+$.when($.ready).then(() =>
+{
 /**
  * Pixijs Setup 
  */
@@ -325,9 +327,9 @@ function pageTwo(){
   let pGrid = grid[3][4];
   let top = yStrt() + pGrid.y;
   let left = xStrt() + pGrid.x;
-  let info = `<p class="pgText" style="position:absolute;top:${top}px;left:${left}px;right:${xStrt()+app.canvas.width}px;"> One word that I think best sums up my journey as a professional writer 
-  is “tortuous.” 
-
+  let info = `<p class="pgText fw-light text-wrap" style="position:absolute;top:${top}px;left:${left}px;right:${xStrt()}px;"> 
+  One word that I think best sums up my journey as a professional writer 
+  is “tortuous.” <br><br>
   The first time I read that word, I thought, “Torturous?” 
   It triggered an innately hostile characterisation, 
   contrary to the sense of discovery and adventure that “tortuous” inspires.</p>`;
@@ -464,4 +466,5 @@ function block(c, x, y){
 let count=0;
 window.addEventListener("scroll", () => {
   console.log(count++);
+});
 });
