@@ -1,7 +1,7 @@
 
 import {Application, Assets, Sprite, Container, Graphics, BitmapText, Point, AnimatedSprite} from "pixi.js";
 
-$.when($.ready).then(() =>
+$.when($.ready).then(async () =>
 {
 /**
  * Pixijs Setup 
@@ -15,30 +15,39 @@ $.when($.ready).then(() =>
 
 
 // Ready DOM 
-const body = document.body;
+const body = document.getElementById("bgCanvas");
 const inner = document.getElementById("canvas");
 const outer = document.getElementById("gridPanel");
+const screen = document.getElementById("topCanvas");
+const dom = document.getElementById("bg");
 
 // Ready Pixijs canvas
+const bg = new Application();
 const app = new Application();
+const top = new Application();
 
-(async () => {
-    await app.init({backgroundAlpha:0, resizeTo: outer, width: outer.clientWidth, height: outer.clientHeight, autoDensity: true, antialias: true, powerPreference: "high-performance"});
-    inner.appendChild(app.canvas); // link application to DOM
-})();
+await bg.init({backgroundAlpha: 0, resizeTo: window, width: window.innerWidth, height: window.innerHeight, powerPreference: "high-performance",  autoDensity: true, antialias: true});
+body.appendChild(bg.canvas);
+
+await app.init({backgroundAlpha: 0, resizeTo: window, width: outer.clientWidth, height: window.innerHeight, autoDensity: true, antialias: true});
+inner.appendChild(app.canvas); // link application to DOM
+
+await top.init({backgroundAlpha: 0, resizeTo: window, width: window.innerWidth, height: window.innerHeight});
+screen.appendChild(top.canvas);
 
 
 const background = new Container();
+bg.stage.addChild(background);
 
 const main = new Container();
-
-app.stage.addChildAt(background, 0);
-app.stage.addChildAt(main, 1);
+app.stage.addChild(main);
 
 let xFactor = window.innerWidth < window.innerHeight ? 0.05 : 0.15;
 let yFactor = window.innerWidth < window.innerHeight ? 0.1 : 0.08;
 let xStrt = () => xFactor * window.innerWidth; 
 let yStrt = () => yFactor * window.innerHeight; 
+
+const backgroundHeight = 0;
 
 // load Assets
 Assets.add({alias: "pg3", src: "./storage/images/lead.JPG" });
@@ -109,7 +118,7 @@ function gridFill(c){
   }
 
   main.addChild(full);
-}gridFill("0x000000");
+}
 
 /**
  * quadrant
@@ -187,7 +196,6 @@ function gridifyMid(a,col,row){
   a.scale.set(d.scale);
   return a;
 }
-
 
 
 /**
@@ -279,8 +287,13 @@ function pageHome(){
   // row 9 
   
   cover.addChild(blocks,txt);
+
   page1.addChild(cover);
+  updateHeight(mainHeight,page1.height);
+  
   main.addChild(page1);
+
+  console.log(page1.height, cover.height, main.height, mainHeight);
 
 }
 
@@ -323,7 +336,6 @@ function pageTwo(){
 
 
   // HTML TEXT
-  let bGrid = document.getElementById("r1c1r1c1");
   let pGrid = grid[3][4];
   let top = yStrt() + pGrid.y;
   let left = xStrt() + pGrid.x;
@@ -334,9 +346,7 @@ function pageTwo(){
   It triggered an innately hostile characterisation, 
   contrary to the sense of discovery and adventure that “tortuous” inspires.</p>`;
   document.getElementById("bg").innerHTML = info;
-
-}pageTwo();
-
+}
 
 async function pageThree() {
   
@@ -379,30 +389,26 @@ async function pageThree() {
 
   let lead = await Assets.load("pg3");
 
-  let lsprite = Sprite.from(lead);
+  let image = Sprite.from(lead);
+  image = gridify(image,0,3);
+  //image.x += xStrt();
+  //image.y += yStrt();
 
-  page3.addChild(blox,heading,gridify(lsprite,0,3));
-
-  // HTML TEXT
-  let info = `<pre id="pg3txt1" class="position-absolute" style="padding:-1.5rem !important;">
-  One word that I think best sums up my 
-  journey as a professional writer 
-  is “tortuous.” 
-
-  The first time I read that word, I 
-  thought, “Torturous?” 
-  It triggered an innately hostile 
-  characterisation, 
-  contrary to the sense of discovery 
-  and adventure that “tortuous” 
-  inspires. <pre>`;
-
-  let bGrid = document.getElementById("r3c2r3c1");
-  bGrid.innerHTML =`${info}`;
-
+  page3.addChild(blox,heading,image);
   main.addChild(page3);
-  // HTML Text
-}
+  
+  // HTML TEXT
+  let pGrid = grid[1][1];
+  let top = main.height + 20;
+  let left = xStrt() + pGrid.x;
+  let info = `<p id="pgText fw-light text-wrap" style="position:absolute;top:${top}px;left:${left}px;right:${xStrt()};">
+  One word that I think best sums up my journey as a professional writer 
+  is “tortuous.” <br><br>
+  The first time I read that word, I thought, “Torturous?” 
+  It triggered an innately hostile characterisation, 
+  contrary to the sense of discovery and adventure that “tortuous” inspires.</p>`;
+  dom.innerHTML = info;
+}pageThree();
 
 
 /**
@@ -463,8 +469,59 @@ function block(c, x, y){
   return shape;
 }
 
-let count=0;
-window.addEventListener("scroll", () => {
-  console.log(count++);
+/**
+ * link scroll between dom and Pixi canvases
+ * */
+
+window.addEventListener("scroll", (e) => {
+  domScroll(window.scrollY);
 });
+
+
+/**
+ * SCROLL
+ */
+let ref = 0;
+let temp = 0;
+function domScroll(scrollY){
+  temp = window.scrollY;
+  console.log(temp);
+  if(ref < temp){
+    main.y -= (temp - ref);
+    background.y -= (temp - ref);
+  }else if(ref > temp){
+    main.y += (ref - temp);
+    background.y += (ref - temp); 
+  }
+  ref = temp;
+
+}
+
+
+function scroll(deltaY){
+  if(deltaY > 0){
+    if(main.height > (outer.clientHeight) && Math.abs(main.y) < (main.height/2)){
+      main.y -= deltaY;
+    }
+    if(background.height  > (window.innerHeight) && Math.abs(background.y) < (background.height/2)){
+      background.y -= deltaY;
+   } 
+  }else if(deltaY < 0){
+    if(main.y < 0){
+      main.y -= deltaY;
+    }
+    if(background.y < 0){
+      background.y -= deltaY;
+    }
+  }
+}
+
+window.addEventListener("wheel", (e) => {
+  if(window.scrollY > 0 || window.scrollY < 0){
+    domScroll(window.scrollY);
+  }else{
+    scroll(e.deltaY);
+  }
+});
+
 });
