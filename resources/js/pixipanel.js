@@ -19,7 +19,7 @@ const body = document.getElementById("bgCanvas");
 const inner = document.getElementById("canvas");
 const outer = document.getElementById("gridPanel");
 const screen = document.getElementById("topCanvas");
-const dom = document.getElementById("bg");
+const dom = document.getElementById("dom");
 
 // Ready Pixijs canvas
 const bg = new Application();
@@ -29,8 +29,8 @@ const top = new Application();
 await bg.init({backgroundAlpha: 0, resizeTo: window, width: window.innerWidth, height: window.innerHeight, powerPreference: "high-performance",  autoDensity: true, antialias: true});
 body.appendChild(bg.canvas);
 
-await app.init({backgroundAlpha: 0, resizeTo: window, width: outer.clientWidth, height: window.innerHeight, autoDensity: true, antialias: true});
-inner.appendChild(app.canvas); // link application to DOM
+await app.init({backgroundAlpha: 0, resizeTo: inner, width: inner.clientWidth, height: inner.clientHeight, autoDensity: true, antialias: true});
+inner.appendChild(app.canvas);
 
 await top.init({backgroundAlpha: 0, resizeTo: window, width: window.innerWidth, height: window.innerHeight});
 screen.appendChild(top.canvas);
@@ -40,22 +40,59 @@ const background = new Container();
 bg.stage.addChild(background);
 
 const main = new Container();
-app.stage.addChild(main);
 
+//scale factor
 let xFactor = window.innerWidth < window.innerHeight ? 0.05 : 0.15;
 let yFactor = window.innerWidth < window.innerHeight ? 0.1 : 0.08;
-let xStrt = () => xFactor * window.innerWidth; 
-let yStrt = () => yFactor * window.innerHeight; 
+let xStrt = () => window.innerWidth < window.innerHeight ? xFactor * window.innerWidth : xFactor * window.innerHeight; 
+let yStrt = () => window.innerWidth < window.innerHeight ? yFactor * window.innerHeight : yFactor * window.innerWidth; 
 
-const backgroundHeight = 0;
+main.y = yStrt();
+app.stage.addChild(main);
+
 
 // load Assets
-Assets.add({alias: "pg3", src: "./storage/images/lead.JPG" });
 
-(async () => {
-  await Assets.backgroundLoad("pg3");
-}
-)();
+Assets.add({alias: "pg3", src: "./storage/images/page3/img1.jpeg" });
+Assets.add({alias: "pg4", src: "./storage/images/page4/img1.jpeg" });
+Assets.addBundle("pg5", [
+  {alias: "img1", src: "./storage/images/page5/img1.jpeg"},
+  {alias: "img2", src: "./storage/images/page5/img2.jpeg"},
+  {alias: "img3", src: "./storage/images/page5/img3.jpeg"},
+  {alias: "img4", src: "./storage/images/page5/img4.jpeg"}
+]);
+Assets.addBundle("pg6", [
+  {alias: "img1", src: "./storage/images/page6/img1.jpeg"},
+  {alias: "img2", src: "./storage/images/page6/img2.jpeg"},
+  {alias: "img3", src: "./storage/images/page6/img3.jpeg"}
+]);
+Assets.addBundle("pg7", [
+  {alias: "img1", src: "./storage/images/page7/img1.jpeg"},
+  {alias: "img2", src: "./storage/images/page7/img2.jpeg"},
+  {alias: "img3", src: "./storage/images/page7/img3.jpeg"},
+  {alias: "img4", src: "./storage/images/page7/img4.jpeg"}
+]);
+Assets.addBundle("pg8", [
+  {alias: "img1", src: "./storage/images/page8/img1.jpeg"},
+  {alias: "img2", src: "./storage/images/page8/img2.jpeg"},
+  {alias: "img3", src: "./storage/images/page8/img3.jpeg"},
+  {alias: "img4", src: "./storage/images/page8/img4.jpeg"}
+]);
+Assets.addBundle("pg9", [
+  {alias: "img1", src: "./storage/images/page9/img1.jpeg"},
+  {alias: "img2", src: "./storage/images/page9/img2.jpeg"},
+  {alias: "img3", src: "./storage/images/page9/img3.jpeg"}
+]);
+Assets.addBundle("pg10", [
+  {alias: "img1", src: "./storage/images/page10/img1.jpeg"},
+  {alias: "img2", src: "./storage/images/page10/img2.jpeg"},
+  {alias: "img3", src: "./storage/images/page10/img3.jpeg"},
+  {alias: "img4", src: "./storage/images/page10/img4.jpeg"},
+  {alias: "img5", src: "./storage/images/page10/img5.jpeg"}
+]);
+
+
+Assets.backgroundLoad(["pg3","pg4","pg5","pg6","pg7","pg8","pg9","pg10"]);
 
 /**
  * API
@@ -77,7 +114,7 @@ function gridCoordinates(){
   
   let widthRef = outer.clientWidth/9
   let heightRef = outer.clientHeight/9;
-  let scale = (2 * window.innerWidth) < window.innerHeight ? 1 : 0.8;
+  let scale = (2 * window.innerWidth) < window.innerHeight ? 1 : 0.75;
   scale = window.innerWidth >= 1919 ? 2 : (window.innerWidth >= 768 ? 1 : scale);
 
   while (count < 9) {
@@ -391,29 +428,55 @@ async function pageThree() {
 
   let image = Sprite.from(lead);
   image = gridify(image,0,3);
-  //image.x += xStrt();
-  //image.y += yStrt();
-
   page3.addChild(blox,heading,image);
   main.addChild(page3);
   
   // HTML TEXT
-  let pGrid = grid[1][1];
-  let top = main.height + 20;
+  let pGrid = grid[0][0];
+  let top = main.height + yStrt();
+  console.log(top);
   let left = xStrt() + pGrid.x;
-  let info = `<p id="pgText fw-light text-wrap" style="position:absolute;top:${top}px;left:${left}px;right:${xStrt()};">
-  One word that I think best sums up my journey as a professional writer 
-  is “tortuous.” <br><br>
-  The first time I read that word, I thought, “Torturous?” 
-  It triggered an innately hostile characterisation, 
-  contrary to the sense of discovery and adventure that “tortuous” inspires.</p>`;
-  dom.innerHTML = info;
+  let right = xStrt();
+  let p1 = `<p class="domText fw-light text-wrap" style="position:absolute;top:${top}px;left:${left}px;">
+  My passion for language took me on a tortuous path. I was encouraged to flex my pen at a young age, 
+  and I wrote for a national youth weekly as a high schooler. 
+  <br><br>
+  </p>`;
+  domText(p1);
+  top += (100 + yStrt());
+  console.log(top);
+  let p2 = `<p class="domText fw-light text-wrap" style="position:absolute;top:${top}px;left:${left}px;">
+  I later gained further tutelage as a journalist in the editorial department of two 
+  national print publications, each with readerships of over 3 million. 
+  <br><br>
+  </p>`;
+  domText(p2);
+  top += (100 + yStrt());
+  let p3 = `<p class="domText fw-light text-wrap" style="position:absolute;top:${top}px;left:${left}px;">
+  One of my proudest achievements as a freelance reporter for the Jamaica Gleaner came with my first lead story.
+  <br><br>
+  </p>`;
+  domText(p3);
+}
+
+function pageFour(){
+
+
 }pageThree();
 
 
 /**
  * -BUILD -helpers
  */
+
+function domText(txt){
+  let dbg = document.getElementById("bg");
+  let element = document.createElement("p");
+  dbg.appendChild(element);
+  element.outerHTML = txt;
+}
+
+function domMedia(element){}
 
 /**
  * makeLetters
@@ -469,14 +532,6 @@ function block(c, x, y){
   return shape;
 }
 
-/**
- * link scroll between dom and Pixi canvases
- * */
-
-window.addEventListener("scroll", (e) => {
-  domScroll(window.scrollY);
-});
-
 
 /**
  * SCROLL
@@ -485,7 +540,6 @@ let ref = 0;
 let temp = 0;
 function domScroll(scrollY){
   temp = window.scrollY;
-  console.log(temp);
   if(ref < temp){
     main.y -= (temp - ref);
     background.y -= (temp - ref);
@@ -494,16 +548,14 @@ function domScroll(scrollY){
     background.y += (ref - temp); 
   }
   ref = temp;
-
 }
-
 
 function scroll(deltaY){
   if(deltaY > 0){
-    if(main.height > (outer.clientHeight) && Math.abs(main.y) < (main.height/2)){
+    if((main.height > window.innerHeight) && (Math.abs(main.y) < (main.height/2))){
       main.y -= deltaY;
     }
-    if(background.height  > (window.innerHeight) && Math.abs(background.y) < (background.height/2)){
+    if((background.height  > window.innerHeight) && Math.abs(background.y) < (background.height/2)){
       background.y -= deltaY;
    } 
   }else if(deltaY < 0){
@@ -517,11 +569,11 @@ function scroll(deltaY){
 }
 
 window.addEventListener("wheel", (e) => {
-  if(window.scrollY > 0 || window.scrollY < 0){
+  if(dom.scrollHeight > window.innerHeight){
     domScroll(window.scrollY);
   }else{
     scroll(e.deltaY);
-  }
+  } 
 });
 
 });
