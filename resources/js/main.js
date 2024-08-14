@@ -455,7 +455,6 @@ async function pageSeven(){
 
   p7.addChild(i1, i2, i3, i4, blocks);
 
-
   return new Page(null,p7,null,null,["p6","p8"]);
 }
 
@@ -463,24 +462,54 @@ async function pageEight(){
 
   let p8 = new Container();
   let images = new Container();
+  let shapes = new Container();
 
-  return new Page(null,p6,null,dom,["p7","p9"]);
+  let textures = await Assets.loadBundle("pg8");
+
+  let i1 = Sprite.from(textures.p81);
+  i1 = gridify(i1, 0, 0);
+  let i2 = Sprite.from(textures.p82);
+  i2 = gridify(i2, 5, 0);
+  let i3 = Sprite.from(textures.p83);
+  i3 = gridify(i3, 0, 5);
+  let i4 = Sprite.from(textures.p84);
+  i4 = gridify(i4, 5, 5);
+
+  images.addChild(i1, i2, i3, i4);
+
+  p8.addChild(images, shapes);
+
+  return new Page(null,p8,null,null,["p7","p9"]);
 }
 
 async function pageNine(){
 
-  let p6 = new Container();
+  let p9 = new Container();
   let images = new Container();
+  let blocks = new Container();
 
-  return new Page(null,p6,null,dom,["p8","p10"]);
+  let textures = await Assets.loadBundle("pg9");
+
+  let i1 = Sprite.from(textures.p91);
+  i1 = gridify(i1, 0, 0);
+  let i2 = Sprite.from(textures.p92);
+  i2 = gridify(i2, 0, 5);
+  let i3 = Sprite.from(textures.p93);
+  i3 = gridify(i3, 5, 0);
+  
+  images.addChild(i1, i2, i3);
+
+  // row1  
+
+  return new Page(null,p9,null,dom,["p8","p10"]);
 }
 
 async function pageTen(){
 
-  let p6 = new Container();
+  let p10 = new Container();
   let images = new Container();
 
-  return new Page(null,p6,null,dom,["p9"]);
+  return new Page(null,p10,null,dom,["p9"]);
 }
 
 
