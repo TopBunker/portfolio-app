@@ -11,17 +11,17 @@
     <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
 
         <!-- Styles and scripts-->
-        @vite(["resources/js/app.js","/node_modules/jquery/dist/jquery.js"])
+        @vite(["/node_modules/jquery/dist/jquery.js", "resources/js/app.js"])
         @vite(["/node_modules/bootstrap/dist/css/bootstrap.min.css"])
 
   </head>
   <body>
     <div id="bgCanvas" class="z-n1 bg-transparent" ></div>
-    <div id="dom" class="z-0">
+    <div id="dom" class="">
         <div id="bg">
         </div>
     </div>
-    <div class="container-fluid bg-transparent z-1">
+    <div class="container-fluid bg-transparent z-2">
       <div id="screen" class="row bg-transparent">
         <div id="lPanel" class="col-md-2 col-lg-3 bg-transparent z-1">    
           <div class="">left</div>
@@ -359,8 +359,7 @@
         </div>
       </div>
     </div>
-    <div id="topCanvas" class="z-2 bg-transparent" ></div>
+    <div id="topCanvas" class="z-3 bg-transparent" ></div>
     @vite(["/node_modules/bootstrap/dist/js/bootstrap.min.js"])
-    @vite(["resources/js/pixipanel.js"])
   </body>
 </html>
