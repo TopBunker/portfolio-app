@@ -488,6 +488,8 @@ async function pageNine(){
   let images = new Container();
   let blocks = new Container();
 
+  let text = pixifyText("S O METRICS", 2);
+
   let textures = await Assets.loadBundle("pg9");
 
   let i1 = Sprite.from(textures.p91);
@@ -500,8 +502,49 @@ async function pageNine(){
   images.addChild(i1, i2, i3);
 
   // row1  
+  blocks.addChild(block(0x000000, 1, 6).fill(0x000000));
+  blocks.addChild(block(0x000000, 2, 6).fill(0x000000));
+  blocks.addChild(block(0x000000, 3, 6));
+  blocks.addChild(gridify(text[0], 3, 6));
+  blocks.addChild(block(0x000000, 4, 6).fill(0x000000));
+  blocks.addChild(block(0x000000, 5, 6).fill(0x000000));
+  blocks.addChild(block(0x000000, 8, 6).fill(0x000000));
 
-  return new Page(null,p9,null,dom,["p8","p10"]);
+  // row2
+  blocks.addChild(block(0x000000, 1, 7).fill(0x000000));
+  blocks.addChild(block(0x000000, 2, 7));
+  blocks.addChild(gridify(text[2], 2, 7));
+  blocks.addChild(block(0x000000, 3, 7));
+  blocks.addChild(gridify(text[3], 3, 7));
+  blocks.addChild(block(0x000000, 4, 7));
+  blocks.addChild(gridify(text[4], 4, 7));
+  blocks.addChild(block(0x000000, 5, 7));
+  blocks.addChild(gridify(text[5], 5, 7));
+  blocks.addChild(block(0x000000, 6, 7));
+  blocks.addChild(gridify(text[6], 6, 7));
+  blocks.addChild(block(0x000000, 7, 7));
+  blocks.addChild(gridify(text[7], 7, 7));
+  blocks.addChild(block(0x000000, 8, 7));
+  blocks.addChild(gridify(text[8], 8, 7));
+
+  // row3
+  blocks.addChild(block(0x000000, 3, 8));
+  blocks.addChild(gridify(text[1], 3, 8));
+
+  p9.addChild(images, blocks);
+
+  let top = yStrt() + i3.height + blocks.height;
+  let right = xStrt();
+  let domTxt = `<p class="pgText fw-light text-wrap" style="position:absolute;top:${top}px;right:${right};">
+  Most notably, I worked with a small lifestyle blog to build a repository of content 
+  as part of a content marketing strategy I developed.
+  </p>
+  <p class="pgText fw-light text-wrap" style="position:absolute;top:${top+20}px;right:${right}">
+  The metrics for the email campaign showed results: subscriptions increased by over 67%; 
+  average click-through rate of approx. 4% (industry high).
+  </p>`;
+
+  return new Page(null,p9,null,domTxt,["p8","p10"]);
 }
 
 async function pageTen(){
