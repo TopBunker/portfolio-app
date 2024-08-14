@@ -551,9 +551,76 @@ async function pageTen(){
 
   let p10 = new Container();
   let images = new Container();
+  let blocks = new Container();
 
-  return new Page(null,p10,null,dom,["p9"]);
+  let txt = pixifyText("RESULTS",2);
+
+  let textures = await Assets.loadBundle("pg10");
+
+  let i1 = Sprite.from(textures.p101);
+  i1 = gridify(i1, 0, 4);
+  let i2 = Sprite.from(textures.p102);
+  i2 = gridify(i2, 2, 4);
+  let i3 = Sprite.from(textures.p103);
+  i3 = gridify(i3, 3, 4);
+  let i4 = Sprite.from(textures.p104);
+  i4 = gridify(i4, 5, 4);
+  let i5 = Sprite.from(textures.p105);
+  i5 = gridify(i5, 7, 4);
+  
+  images.addChild(i1, i2, i3, i4, i5);
+
+  let text1 = `<p class="pgText fw-light text-wrap" style="position:absolute;top${}px;left:${}px;">
+  I combine creativity and methodology to define, design, and execute solutions with an emphasis on optimising value across stakeholders.
+  </p>`;
+
+  let text2 = `<p class="pgText fw-light text-wrap" style="position:absolute;top:${}px;left:${}px;">
+  To nurture my creativity, I continuosly engae in poetry and creative fiction, always striving to push the boundaries of language 
+  and explore new horizons beyond the postmodern.
+  </p>
+  <p class="pgText fw-light text-wrap" style="position:absolute;top:${}px;left:${}px;">
+  One advantage of my tortuous career is the myriad of perspectives gleaned. All the twists and turns shape my pen.
+  </p>`;
+
+  // row1
+  blocks.addChild(block(0x000000, 2, 4).fill(0x000000));
+  blocks.addChild(block(0x000000, 3, 4).fill(0x000000));
+  blocks.addChild(block(0x000000, 4, 4).fill(0x000000));
+  blocks.addChild(block(0x000000, 5, 4).fill(0x000000));
+  blocks.addChild(block(0x000000, 6, 4).fill(0x000000));
+  blocks.addChild(block(0x000000, 7, 4).fill(0x000000));
+  blocks.addChild(block(0x000000, 8, 4).fill(0x000000));
+
+  // row2
+  blocks.addChild(block(0x000000, 1, 5));
+  blocks.addChild(gridifyCenter(txt[0]), 1, 5);
+  blocks.addChild(block(0x000000, 2, 5));
+  blocks.addChild(gridifyCenter(txt[1], 2, 5));
+  blocks.addChild(block(0x000000, 3, 5));
+  blocks.addChild(gridifyCenter(txt[2], 3, 5));
+  blocks.addChild(block(0x000000, 4, 5));
+  blocks.addChild(gridifyCenter(txt[3], 4, 5));
+  blocks.addChild(block(0x000000, 5, 5));
+  blocks.addChild(gridifyCenter(txt[4], 5, 5));
+  blocks.addChild(block(0x000000, 6, 5));
+  blocks.addChild(gridifyCenter(txt[5], 6, 5));
+  blocks.addChild(block(0x000000, 7, 5));
+  blocks.addChild(gridifyCenter(txt[6], 7, 5));
+
+  // row3
+  blocks.addChild(block(0x000000, 1, 6).fill(0x000000));
+  blocks.addChild(block(0x000000, 2, 6).fill(0x000000));
+  blocks.addChild(block(0x000000, 3, 6).fill(0x000000));
+  blocks.addChild(block(0x000000, 4, 6).fill(0x000000));
+  blocks.addChild(block(0x000000, 5, 6).fill(0x000000));
+  blocks.addChild(block(0x000000, 6, 6).fill(0x000000));
+  blocks.addChild(block(0x000000, 7, 6).fill(0x000000));
+
+
+  p10.addChild(blocks,images);
+  
+
+  return new Page(null,p10,null,[text1, text2],["p9"]);
 }
-
 
 });
