@@ -7,42 +7,39 @@ import scroll from "./scroll";
  */
 
 export default class Page {
-  #fullPage = new Container();
-
-  #neighbours;
   #domMedia;
-  #canvasMedia;
+  #top;
+  #main;
+  #background;
+  #neighbours;
 
   interactions = {"buttons": []};
 
   constructor(t,m,b,d,n) {
-    this.#neighbours = n;
     this.#domMedia = d;
-    this.#canvasMedia = {
-      "top": t, 
-      "main": m,
-      "bg": b
-    };
+    this.#top = t;
+    this.#main = m;
+    this.#background = b;
+    this.#neighbours = n;
   }
 
   display(top,main,background,dom) {
-    this.#fullPage.addChildAt(this.canvasMedia.bg,0);
-    this.#fullPage.addChildAt(this.canvasMedia.main,1);
-    this.#fullPage.addChildAt(this.canvasMedia.top,2);
-
     scroll();
-
-    top.addChild(this.#fullPage.children[0]);
-    main.addChild(this.#fullPage.children[1]);
-    background.addChild(this.#fullPage.children[2]);
-
-    this.domDisplay = this.domMedia;
-
-    dom.innerHTML = this.domDisplay;
+    if(this.#domMedia != null){
+      dom.innerHTML = this.#domMedia;
+    }
+    if(this.#top != null){
+      top.addChild(this.#top);
+    }
+    if(this.#main != null){
+      main.addChild(this.#main);
+    }
+    if(this.#background != null){
+      background.addChild(this.#background);
+    }
   }
 
   hide() {
     window.removeEventListener("wheel", scroll);
-    this.#fullPage.removeChildren();
   }
 }

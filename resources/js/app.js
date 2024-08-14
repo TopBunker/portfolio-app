@@ -4,4 +4,4 @@ import '../css/app.css';
 import jQuery from 'jquery';
 window.$ = jQuery;
 
-import './main';
+import './Paginator';

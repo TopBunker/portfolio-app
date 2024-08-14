@@ -8,16 +8,16 @@ export default function scroll()
 {
     window.addEventListener("wheel", (e) => {
         if(document.getElementById("dom").scrollHeight > window.innerHeight){
-          domScroll(window.scrollY);
+          domSync(window.scrollY);
         }else{
-          scroll(e.deltaY);
+          defaultCanvas(e.deltaY);
         } 
     });   
 }
 
 let ref = 0;
 let temp = 0;
-function domScroll(scrollY){
+function domSync(scrollY){
   temp = window.scrollY;
   if(ref < temp){
     main.x = 0;
@@ -35,7 +35,7 @@ function domScroll(scrollY){
   ref = temp;
 }
 
-function scroll(deltaY){
+function defaultCanvas(deltaY){
   if(deltaY > 0){
     if((main.height > window.innerHeight) && (Math.abs(main.y) < (main.height/2))){
       main.y -= deltaY;

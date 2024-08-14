@@ -1,4 +1,5 @@
 
+let outer = document.getElementById("gridPanel");
 
 //scale factor
 let xFactor = window.innerWidth < window.innerHeight ? 0.05 : 0.15;
@@ -9,7 +10,7 @@ let yStrt = () => window.innerWidth < window.innerHeight ? yFactor * window.inne
 /**
  * GRID SYSTEM 
  */
-const grid = [];  // object Array of 81 (9/9) coordinate objects defining the grid system;  acccessed: grid[col][row]
+const grid = gridCoordinates();  // object Array of 81 (9/9) coordinate objects defining the grid system;  acccessed: grid[col][row]
 
 /**
  * -BUILD grid 

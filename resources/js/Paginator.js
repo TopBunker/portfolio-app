@@ -4,100 +4,107 @@ import {gridify, gridifyCenter, grid, yStrt, xStrt} from "./grid";
 import Page from "./Page";
 import {pixifyText, block} from "./build";
 
+
 $.when($.ready).then(async () =>
 {
-/**
- * Pixijs Setup 
- */
 
-/**
- * Initialise API
- * -setup environment
- * -define the interface between the Pixijs module and DOM
- */
 
-// Ready DOM 
-const body = document.getElementById("bgCanvas");
-const inner = document.getElementById("canvas");
-const outer = document.getElementById("gridPanel");
-const screen = document.getElementById("topCanvas");
-const dom = document.getElementById("dom");
+  async function main(){
+    /**
+    * Pixijs Setup 
+    */     
+      
+    const dom = document.getElementById("dom");    
+    
+    // Pixijs DOM interface
+    // background 
+    const body = document.getElementById("bgCanvas");
+    const bg = new Application();
+    await bg.init({backgroundAlpha: 0, resizeTo: window, width: window.innerWidth, height: window.innerHeight, powerPreference: "high-performance",  autoDensity: true, antialias: true});
+    body.appendChild(bg.canvas);
 
-// Ready Pixijs canvas
-const bg = new Application();
-const app = new Application();
-const top = new Application();
+    const background = new Container();
+    bg.stage.addChild(background);
 
-(async () => {
-  await bg.init({backgroundAlpha: 0, resizeTo: window, width: window.innerWidth, height: window.innerHeight, powerPreference: "high-performance",  autoDensity: true, antialias: true});
-  body.appendChild(bg.canvas);
+    // main canvas
+    const inner = document.getElementById("canvas");
+    const app = new Application();
+    await app.init({backgroundAlpha: 0, resizeTo: inner, width: inner.clientWidth, height: inner.clientHeight, autoDensity: true, antialias: true});
+    inner.appendChild(app.canvas);
 
-  await app.init({backgroundAlpha: 0, resizeTo: inner, width: inner.clientWidth, height: inner.clientHeight, autoDensity: true, antialias: true});
-  inner.appendChild(app.canvas);
+    const main = new Container();
+    app.stage.addChild(main);
+    
+    // top canvas for interactions
+    const screen = document.getElementById("topCanvas");
+    const top = new Application();
+    await top.init({backgroundAlpha: 0, resizeTo: window, width: window.innerWidth, height: window.innerHeight});
+    screen.appendChild(top.canvas);
+    
+    const topScreen = new Container();
+    top.stage.addChild(topScreen);
 
-  await top.init({backgroundAlpha: 0, resizeTo: window, width: window.innerWidth, height: window.innerHeight});
-  screen.appendChild(top.canvas);
-})();
+    // background load Assets
+    Assets.add({alias: "pg3", src: "./storage/images/page3/img1.jpeg" });
+    Assets.add({alias: "pg4", src: "./storage/images/page4/img1.jpeg" });
+    Assets.addBundle("pg5", [
+      {alias: "p51", src: "./storage/images/page5/img1.jpeg"},
+      {alias: "p52", src: "./storage/images/page5/img2.jpeg"},
+      {alias: "p53", src: "./storage/images/page5/img3.jpeg"},
+      {alias: "p54", src: "./storage/images/page5/img4.jpeg"}
+    ]);
+    Assets.addBundle("pg6", [
+      {alias: "p61", src: "./storage/images/page6/img1.jpeg"},
+      {alias: "p62", src: "./storage/images/page6/img2.jpeg"},
+      {alias: "p63", src: "./storage/images/page6/img3.jpeg"}
+    ]);
+    Assets.addBundle("pg7", [
+      {alias: "p71", src: "./storage/images/page7/img1.jpeg"},
+      {alias: "p72", src: "./storage/images/page7/img2.jpeg"},
+      {alias: "p73", src: "./storage/images/page7/img3.jpeg"},
+      {alias: "p74", src: "./storage/images/page7/img4.jpeg"}
+    ]);
+    Assets.addBundle("pg8", [
+      {alias: "p81", src: "./storage/images/page8/img1.jpeg"},
+      {alias: "p82", src: "./storage/images/page8/img2.jpeg"},
+      {alias: "p83", src: "./storage/images/page8/img3.jpeg"},
+      {alias: "p84", src: "./storage/images/page8/img4.jpeg"}
+    ]);
+    Assets.addBundle("pg9", [
+      {alias: "p91", src: "./storage/images/page9/img1.jpeg"},
+      {alias: "p92", src: "./storage/images/page9/img2.jpeg"},
+      {alias: "p93", src: "./storage/images/page9/img3.jpeg"}
+    ]);
+    Assets.addBundle("pg10", [
+      {alias: "p101", src: "./storage/images/page10/img1.jpeg"},
+      {alias: "p102", src: "./storage/images/page10/img2.jpeg"},
+      {alias: "p103", src: "./storage/images/page10/img3.jpeg"},
+      {alias: "p104", src: "./storage/images/page10/img4.jpeg"},
+      {alias: "p105", src: "./storage/images/page10/img5.jpeg"}
+    ]);
+    Assets.backgroundLoad(["pg3","pg4","pg5", "pg6", "pg7", "pg8", "pg9", "pg10"]);
 
-const background = new Container();
-bg.stage.addChild(background);
 
-const main = new Container();
-app.stage.addChild(main);
-
-// load Assets
-Assets.add({alias: "pg3", src: "./storage/images/page3/img1.jpeg" });
-Assets.add({alias: "pg4", src: "./storage/images/page4/img1.jpeg" });
-Assets.addBundle("pg5", [
-  {alias: "p51", src: "./storage/images/page5/img1.jpeg"},
-  {alias: "p52", src: "./storage/images/page5/img2.jpeg"},
-  {alias: "p53", src: "./storage/images/page5/img3.jpeg"},
-  {alias: "p54", src: "./storage/images/page5/img4.jpeg"}
-]);
-Assets.addBundle("pg6", [
-  {alias: "p61", src: "./storage/images/page6/img1.jpeg"},
-  {alias: "p62", src: "./storage/images/page6/img2.jpeg"},
-  {alias: "p63", src: "./storage/images/page6/img3.jpeg"}
-]);
-Assets.addBundle("pg7", [
-  {alias: "p71", src: "./storage/images/page7/img1.jpeg"},
-  {alias: "p72", src: "./storage/images/page7/img2.jpeg"},
-  {alias: "p73", src: "./storage/images/page7/img3.jpeg"},
-  {alias: "p74", src: "./storage/images/page7/img4.jpeg"}
-]);
-Assets.addBundle("pg8", [
-  {alias: "p81", src: "./storage/images/page8/img1.jpeg"},
-  {alias: "p82", src: "./storage/images/page8/img2.jpeg"},
-  {alias: "p83", src: "./storage/images/page8/img3.jpeg"},
-  {alias: "p84", src: "./storage/images/page8/img4.jpeg"}
-]);
-Assets.addBundle("pg9", [
-  {alias: "p91", src: "./storage/images/page9/img1.jpeg"},
-  {alias: "p92", src: "./storage/images/page9/img2.jpeg"},
-  {alias: "p93", src: "./storage/images/page9/img3.jpeg"}
-]);
-Assets.addBundle("pg10", [
-  {alias: "p101", src: "./storage/images/page10/img1.jpeg"},
-  {alias: "p102", src: "./storage/images/page10/img2.jpeg"},
-  {alias: "p103", src: "./storage/images/page10/img3.jpeg"},
-  {alias: "p104", src: "./storage/images/page10/img4.jpeg"},
-  {alias: "p105", src: "./storage/images/page10/img5.jpeg"}
-]);
-
-Assets.load(["pg3", "pg4"]);
-Assets.loadBundle(["pg5", "pg6", "pg7", "pg8", "pg9", "pg10"]);
-
-/**
- * API
- */
-
-/**
- * PAGINATION
- */
+    const home = pageHome();
+    const P2 = pageTwo();
+    const P3 = pageThree();
+    const P4 = pageFour();
+    const P5 = pageFive();
+    const P6 = pageSix();
+    const P7 = pageSeven();
+    const P8 = pageEight();
+    const P9 = pageNine();
+    const P10 = pageTen();
+  
+    console.log(home);
+    home.display(topScreen,main,background,dom);
+    
+  }main();
 
 /**
  * -BUILD pages
  */
+
 function pageHome(){
   let cover = new Container();
   let txt = new Container();
@@ -229,10 +236,7 @@ function pageTwo(){
   return new Page(null,page2,null,info,["pg1","pg3"]);
 }
 
-async function pageThree() {
-  
-  let pic = await Assets.load("pg3");
-  
+async function pageThree() {  
   let page3 = new Container();
   let heading = new Container();
   let blox = new Container();
@@ -302,7 +306,7 @@ async function pageThree() {
 
 async function pageFour(){
 
-  let texture  = await Assets.load("p4");
+  let texture  = await Assets.load("pg4");
   let image = Sprite.from(texture);
   image = gridify(image,0,0);
 
@@ -361,7 +365,7 @@ async function pageFive(){
   i3 = gridify(i3, 2, 6);
   let i4 = Sprite.from(textures.p54);
   i4 = gridify(i4, 3, 7);
-  images.addChild(p1, p2, p3, p4);
+  images.addChild(i1, i2, i3, i4);
 
   p5.addChild(blocks,images);
 
@@ -387,7 +391,7 @@ async function pageSix(){
   
   let top = yStrt();
   let right = xStrt();
-  let text = `<p class="pageText fw-light text-wrap" style="postion:absolute;top:${top};right:${right}">
+  let text = `<p class="pageText fw-light text-wrap" style="postion:absolute;top:${top}px;right:${right}px;">
   I gained practical experience in marketing communications, including copywriting and content production.
   </p>`;
   return new Page(null,p6,null,text,["p5","p7"]);
@@ -535,11 +539,11 @@ async function pageNine(){
 
   let top = yStrt() + i3.height + blocks.height;
   let right = xStrt();
-  let domTxt = `<p class="pgText fw-light text-wrap" style="position:absolute;top:${top}px;right:${right};">
+  let domTxt = `<p class="pgText fw-light text-wrap" style="position:absolute;top:${top}px;right:${right}px;">
   Most notably, I worked with a small lifestyle blog to build a repository of content 
   as part of a content marketing strategy I developed.
   </p>
-  <p class="pgText fw-light text-wrap" style="position:absolute;top:${top+20}px;right:${right}">
+  <p class="pgText fw-light text-wrap" style="position:absolute;top:${top+20}px;right:${right}px;">
   The metrics for the email campaign showed results: subscriptions increased by over 67%; 
   average click-through rate of approx. 4% (industry high).
   </p>`;
@@ -570,15 +574,17 @@ async function pageTen(){
   
   images.addChild(i1, i2, i3, i4, i5);
 
-  let text1 = `<p class="pgText fw-light text-wrap" style="position:absolute;top${}px;left:${}px;">
+  let top = yStrt();
+  let left = xStrt();
+  let text1 = `<p class="pgText fw-light text-wrap" style="position:absolute;top${top}px;left:${left}px;">
   I combine creativity and methodology to define, design, and execute solutions with an emphasis on optimising value across stakeholders.
   </p>`;
 
-  let text2 = `<p class="pgText fw-light text-wrap" style="position:absolute;top:${}px;left:${}px;">
+  let text2 = `<p class="pgText fw-light text-wrap" style="position:absolute;top:${top}px;left:${top}px;">
   To nurture my creativity, I continuosly engae in poetry and creative fiction, always striving to push the boundaries of language 
   and explore new horizons beyond the postmodern.
   </p>
-  <p class="pgText fw-light text-wrap" style="position:absolute;top:${}px;left:${}px;">
+  <p class="pgText fw-light text-wrap" style="position:absolute;top:${top}px;left:${left}px;">
   One advantage of my tortuous career is the myriad of perspectives gleaned. All the twists and turns shape my pen.
   </p>`;
 
@@ -593,7 +599,7 @@ async function pageTen(){
 
   // row2
   blocks.addChild(block(0x000000, 1, 5));
-  blocks.addChild(gridifyCenter(txt[0]), 1, 5);
+  blocks.addChild(gridifyCenter(txt[0], 1, 5));
   blocks.addChild(block(0x000000, 2, 5));
   blocks.addChild(gridifyCenter(txt[1], 2, 5));
   blocks.addChild(block(0x000000, 3, 5));
@@ -622,5 +628,7 @@ async function pageTen(){
 
   return new Page(null,p10,null,[text1, text2],["p9"]);
 }
+ 
+
 
 });

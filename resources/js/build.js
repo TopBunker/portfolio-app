@@ -1,4 +1,6 @@
-import {BitmapText} from "pixi.js";
+import {BitmapText,Graphics} from "pixi.js";
+import {grid} from "./grid";
+
 /**
  * -BUILD -helpers
  */

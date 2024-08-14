@@ -17,7 +17,7 @@
   </head>
   <body>
     <div id="bgCanvas" class="z-n1 bg-transparent" ></div>
-    <div id="dom" class="">
+    <div id="dom">
         <div id="bg">
         </div>
     </div>
