@@ -38,8 +38,4 @@ export default class Page {
       background.addChild(this.#background);
     }
   }
-
-  hide() {
-    window.removeEventListener("wheel", scroll);
-  }
 }

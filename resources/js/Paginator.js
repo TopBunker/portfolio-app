@@ -7,44 +7,7 @@ import {pixifyText, block} from "./build";
 
 $.when($.ready).then(async () =>
 {
-
-
-  async function main(){
-    /**
-    * Pixijs Setup 
-    */     
-      
-    const dom = document.getElementById("dom");    
-    
-    // Pixijs DOM interface
-    // background 
-    const body = document.getElementById("bgCanvas");
-    const bg = new Application();
-    await bg.init({backgroundAlpha: 0, resizeTo: window, width: window.innerWidth, height: window.innerHeight, powerPreference: "high-performance",  autoDensity: true, antialias: true});
-    body.appendChild(bg.canvas);
-
-    const background = new Container();
-    bg.stage.addChild(background);
-
-    // main canvas
-    const inner = document.getElementById("canvas");
-    const app = new Application();
-    await app.init({backgroundAlpha: 0, resizeTo: inner, width: inner.clientWidth, height: inner.clientHeight, autoDensity: true, antialias: true});
-    inner.appendChild(app.canvas);
-
-    const main = new Container();
-    app.stage.addChild(main);
-    
-    // top canvas for interactions
-    const screen = document.getElementById("topCanvas");
-    const top = new Application();
-    await top.init({backgroundAlpha: 0, resizeTo: window, width: window.innerWidth, height: window.innerHeight});
-    screen.appendChild(top.canvas);
-    
-    const topScreen = new Container();
-    top.stage.addChild(topScreen);
-
-    // background load Assets
+  // background load Pixijs assets
     Assets.add({alias: "pg3", src: "./storage/images/page3/img1.jpeg" });
     Assets.add({alias: "pg4", src: "./storage/images/page4/img1.jpeg" });
     Assets.addBundle("pg5", [
@@ -82,11 +45,49 @@ $.when($.ready).then(async () =>
       {alias: "p104", src: "./storage/images/page10/img4.jpeg"},
       {alias: "p105", src: "./storage/images/page10/img5.jpeg"}
     ]);
-    Assets.backgroundLoad(["pg3","pg4","pg5", "pg6", "pg7", "pg8", "pg9", "pg10"]);
+    Assets.backgroundLoad("pg3","pg4","pg5", "pg6", "pg7", "pg8", "pg9", "pg10");
 
+    /**
+    * Pixijs Setup 
+    */     
+      
+    const dom = document.getElementById("dom");    
+    
+    // Pixijs DOM interface
+    // background 
+    const body = document.getElementById("bgCanvas");
+    const bg = new Application();
+    await bg.init({backgroundAlpha: 0, resizeTo: window, width: window.innerWidth, height: window.innerHeight, powerPreference: "high-performance",  autoDensity: true, antialias: true});
+    body.appendChild(bg.canvas);
 
+    const background = new Container();
+    bg.stage.addChild(background);
+
+    // main canvas
+    const inner = document.getElementById("canvas");
+    const app = new Application();
+    await app.init({backgroundAlpha: 0, resizeTo: inner, width: inner.clientWidth, height: inner.clientHeight, autoDensity: true, antialias: true});
+    inner.appendChild(app.canvas);
+
+    const main = new Container();
+    app.stage.addChild(main);
+    
+    // top canvas for interactions
+    const screen = document.getElementById("topCanvas");
+    const top = new Application();
+    await top.init({backgroundAlpha: 0, resizeTo: window, width: window.innerWidth, height: window.innerHeight});
+    screen.appendChild(top.canvas);
+    
+    const topScreen = new Container();
+    top.stage.addChild(topScreen);
+    
+  async function landing(){
+
+    const pages = []
     const home = pageHome();
+    pages.push(home);
     const P2 = pageTwo();
+    pages.pu
     const P3 = pageThree();
     const P4 = pageFour();
     const P5 = pageFive();
@@ -99,7 +100,7 @@ $.when($.ready).then(async () =>
     console.log(home);
     home.display(topScreen,main,background,dom);
     
-  }main();
+  } landing();
 
 /**
  * -BUILD pages
@@ -281,7 +282,6 @@ async function pageThree() {
   // HTML TEXT
   let pGrid = grid[0][0];
   let top = main.height + yStrt();
-  console.log(top);
   let left = xStrt() + pGrid.x;
   let right = xStrt();
   let p1 = `<p class="domText fw-light text-wrap" style="position:absolute;top:${top}px;left:${left}px;">

@@ -62,7 +62,7 @@ function gridCoordinates(width, height){
       x++;
     }
   
-    main.addChild(full);
+    return full;
   }
   
   /**
