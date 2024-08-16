@@ -4,43 +4,42 @@
 
 
 // Define page scroll function
-export default function scroll(top, main, background) 
+export default function scroll(main) 
 {
     window.addEventListener("wheel", (e) => {
-          defaultScroll(e.deltaY, main, background);
+          defaultScroll(e.deltaY, main);
     });
 }
 
-function defaultScroll(deltaY, main, background){
+function defaultScroll(deltaY, main){
   if(deltaY > 0){
     if(document.getElementById("dom").hasChildNodes){
       for(const element of document.getElementById("dom").children){
         let offset = element.style.top;
-        if((parseInt(offset,10) + element.scrollHeight + 30) > window.innerHeight){
-          element.scrollBy(deltaY);
-          if((main.height > window.innerHeight) && (Math.abs(main.y) < (main.height/2))){
-            main.y -= deltaY;
-          }
-          if((background.height  > window.innerHeight) && Math.abs(background.y) < (background.height/2)){
-            background.y -= deltaY;
-          }
+        let topInt = pparseInt(offset,10);
+        if((topInt + element.scrollHeight + 30) > window.innerHeight){
+          element.scrollBy({top: deltaY, left: 0, behavior: smooth});
+          main.y -= deltaY;
+        }else if((main.height > window.innerHeight) && (Math.abs(main.y) < (main.height/2))){
+          element.scrollBy({top: deltaY, left: 0, behavior: smooth});
+          main.y -= deltaY;
         }
       }
-
     }else{
       if((main.height > window.innerHeight) && (Math.abs(main.y) < (main.height/2))){
         main.y -= deltaY;
       }
-      if((background.height  > window.innerHeight) && Math.abs(background.y) < (background.height/2)){
-        background.y -= deltaY;
-      }
     }
   }else if(deltaY < 0){
-    if(main.y < 0){
-      main.y -= deltaY;
-    }
-    if(background.y < 0){
-      background.y -= deltaY;
+    if(document.getElementById("dom").hasChildNodes){
+      if(main.y < 0){
+        element.scrollBy({top: deltaY, left: 0, behavior: smooth});
+        main.y -= deltaY;
+      }
+    }else{
+      if(main.y < 0){
+        main.y -= deltaY;
+      }
     }
   }
 }
