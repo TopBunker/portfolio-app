@@ -86,19 +86,26 @@ $.when($.ready).then(async () =>
     const pages = []
     const home = pageHome();
     pages.push(home);
-    const P2 = pageTwo();
-    pages.pu
-    const P3 = pageThree();
-    const P4 = pageFour();
-    const P5 = pageFive();
-    const P6 = pageSix();
-    const P7 = pageSeven();
-    const P8 = pageEight();
-    const P9 = pageNine();
-    const P10 = pageTen();
-  
-    console.log(home);
-    home.display(topScreen,main,background,dom);
+    const page2 = pageTwo();
+    pages.push(page2)
+    const page3 = pageThree();
+    pages.push(page3);
+    const page4 = pageFour();
+    pages.push(page4);
+    const page5 = pageFive();
+    pages.push(page5);
+    const page6 = pageSix();
+    pages.push(page6);
+    const page7 = pageSeven();
+    pages.push(page7);
+    const page8 = pageEight();
+    pages.push(page8);
+    const page9 = pageNine();
+    pages.push(page9);
+    const page10 = pageTen();
+    pages.push(page10);
+
+    page2.display(top,main,background,dom);
     
   } landing();
 
@@ -185,6 +192,8 @@ function pageHome(){
   
   cover.addChild(blocks,txt,first,last);
 
+  cover.y = yStrt();
+
   return new Page(null,cover,null,null,["pg2"]);
 }
 
@@ -224,7 +233,7 @@ function pageTwo(){
   page2.addChild(title,blox);
 
   // HTML TEXT
-  let pGrid = grid[3][4];
+  let pGrid = grid[2][3];
   let top = yStrt() + pGrid.y;
   let left = xStrt() + pGrid.x;
   let info = `<p class="pgText fw-light text-wrap" style="position:absolute;top:${top}px;left:${left}px;right:${xStrt()}px;"> 

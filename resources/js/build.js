@@ -6,7 +6,7 @@ import {grid} from "./grid";
  */
 
 function domText(txt){
-    let dbg = document.getElementById("bg");
+    let dbg = document.getElementById("dom");
     let element = document.createElement("p");
     dbg.appendChild(element);
     element.outerHTML = txt;
@@ -67,4 +67,4 @@ function block(c, x, y){
     return shape;
   }
   
-  export {pixifyText, block}; 
+  export {pixifyText, block, domText}; 

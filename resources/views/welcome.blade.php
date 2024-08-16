@@ -18,8 +18,6 @@
   <body>
     <div id="bgCanvas" class="z-n1 bg-transparent" ></div>
     <div id="dom">
-        <div id="bg">
-        </div>
     </div>
     <div class="container-fluid bg-transparent z-2">
       <div id="screen" class="row bg-transparent">

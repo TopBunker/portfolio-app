@@ -1,6 +1,5 @@
-
-import { Container } from "pixi.js";
 import scroll from "./scroll";
+import { domText } from "./build";
 
 /**
  * Page Class
@@ -11,22 +10,22 @@ export default class Page {
   #top;
   #main;
   #background;
-  #neighbours;
+  #neighbors;
 
-  interactions = {"buttons": []};
+  #interactions = {"buttons": []};
 
   constructor(t,m,b,d,n) {
     this.#domMedia = d;
     this.#top = t;
     this.#main = m;
     this.#background = b;
-    this.#neighbours = n;
+    this.#neighbors = n;
   }
 
   display(top,main,background,dom) {
-    scroll();
+    scroll(top,main,background);
     if(this.#domMedia != null){
-      dom.innerHTML = this.#domMedia;
+      domText(this.#domMedia);
     }
     if(this.#top != null){
       top.addChild(this.#top);
@@ -38,4 +37,25 @@ export default class Page {
       background.addChild(this.#background);
     }
   }
+
+  getTop(){
+    return this.#top;
+  }
+
+  getMain(){
+    return this.#main;
+  }
+
+  getBackground(){
+    return this.#background;
+  }
+
+  getNeighbors(){
+    return this.#neighbors;
+  }
+
+  getDomElements(){
+    return this.#domMedia;
+  }
+
 }
