@@ -1,4 +1,4 @@
-import scroll from "./scroll";
+import defaultScroll from "./scroll";
 import { domText } from "./build";
 
 /**
@@ -23,7 +23,9 @@ export default class Page {
   }
 
   display(top,main,background,dom) {
-    scroll(top,main,background);
+    window.addEventListener("wheel", (e) => {
+      defaultScroll(e, main, dom);
+    });
     if(this.#domMedia != null){
       domText(this.#domMedia);
     }
@@ -36,6 +38,10 @@ export default class Page {
     if(this.#background != null){
       background.addChild(this.#background);
     }
+  }
+
+  hidden(){
+    
   }
 
   getTop(){
