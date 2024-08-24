@@ -5,14 +5,21 @@ import {grid} from "./grid";
  * -BUILD -helpers
  */
 
-function domText(txt){
+function domMedia(tagListObject){
     let dbg = document.getElementById("dom");
-    let element = document.createElement("p");
+    let vals = Object.values(tagListObject);
+    let element = vals[0];
     dbg.appendChild(element);
-    element.outerHTML = txt;
+    if(vals.length > 1){
+      for(let i = 1; i < vals.length; i++){
+        let el = vals[i];
+        let vOffset = (parseInt(dbg.lastElementChild.style.top, 10) + dbg.lastElementChild.scrollHeight + 20);
+        el.style.top = `${vOffset}px`;
+        dbg.appendChild(el);
+      }
+    }
   }
-  
-  function domMedia(element){}
+
 
 /**
  * makeLetters
@@ -67,4 +74,4 @@ function block(c, x, y){
     return shape;
   }
   
-  export {pixifyText, block, domText}; 
+  export {pixifyText, block, domMedia}; 

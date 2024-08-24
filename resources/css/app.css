@@ -1,13 +1,15 @@
-#screen {
+#canvas {
+    height: 100vh;
+    width: 100vw;
     position: fixed;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
-    height: 100vh;
 }
 
-#bgCanvas {
+#screen {
+    height: 100vh;
     position: fixed;
     top: 0;
     right: 0;
@@ -16,6 +18,8 @@
 }
 
 #topCanvas {
+    height: 100vh;
+    width: 100vw;
     position: fixed;
     top: 0;
     right: 0;
@@ -35,14 +39,18 @@
     position: fixed;
     top: 0;
     left: 0;
-    
 }
-
+    
 #rPanel {
     background-color:rgba(165, 42, 42, 0.3);
     position: fixed;
     bottom: 0;
     right: 0;
+}
+
+.pgText{
+    padding: 0;
+    margin: 0;
 }
 
 @media only screen and (orientation: portrait){
@@ -53,13 +61,7 @@
         top: 10vh;
         left: 5vw;
     }
-    #canvas {
-        height: 100vh;
-        width: 90vw;
-        position: fixed;
-        top: 0;
-        left: 5vw;
-    }
+
     #dom {
         height: 100vh;
         width: 90vw;
@@ -67,10 +69,10 @@
         top: 0;
         left: 5vw;
     }
+
     .box {
         height: 8.9vh;
     }
-
 }
 
 
@@ -82,13 +84,7 @@
         top: 8vh;
         left: 15vw;
     }
-    #canvas {
-        height: 100vh;
-        width: 70vw;
-        position: fixed;
-        top: 0;
-        left: 15vw;
-    }
+
     #dom {
         height: 100vh;
         width: 70vw;

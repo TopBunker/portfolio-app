@@ -4,18 +4,28 @@
 
 
 // Define page scroll function
-export default function defaultScroll(e, main,dom) 
+export default function scroll(scroll, e, main,dom) 
 {
-  vScroll(e.deltaY, main, dom);
+  switch (scroll) {
+    case "default": 
+      vScroll(e.deltaY, main, dom);
+      break;
+    case "vScroll":
+      vScroll(e.deltaY, main, dom);
+      break;
+    default:
+      vScroll(e.deltaY, main, dom);
+      break;
+  }
+  
 }
 
 function vScroll(deltaY, main, dom){
   // deltaY > 0 : scrolling down the page; element.y decreases to move content up
   if(deltaY > 0){
-    if(dom.hasChildNodes){
-      
+    if(dom.children.length > 0){
       // check for content below window
-      if(((parseInt(dom.lastElementChild.style.top, 10) + dom.lastElementChild.scrollHeight + 50) > window.innerHeight) || ((main.y + main.height + 50) > window.innerHeight)){
+      if(((parseInt(dom.lastElementChild.style.top, 10) + dom.lastElementChild.scrollHeight + 100) > window.innerHeight) || ((main.y + main.height + 100) > window.innerHeight)){
         
         // scroll canvas and dom in sync
         for(const element of dom.children){
@@ -25,9 +35,9 @@ function vScroll(deltaY, main, dom){
         main.y -= deltaY;
 
         // enforce scroll limit according to bottom-most content 
-        if(((main.y + main.height + 50) > (parseInt(dom.lastElementChild.style.top, 10) + dom.lastElementChild.scrollHeight + 50))){
-          if((main.y + main.height + 50) < window.innerHeight){
-            let a = window.innerHeight - main.height - 50;
+        if(((main.y + main.height + 100) > (parseInt(dom.lastElementChild.style.top, 10) + dom.lastElementChild.scrollHeight + 100))){
+          if((main.y + main.height + 100) < window.innerHeight){
+            let a = window.innerHeight - main.height - 100;
             for(const element of dom.children){
               let topInt = parseInt(element.style.top, 10);
               element.style.top = `${topInt + (Math.abs(a) - Math.abs(main.y))}px`;
@@ -35,24 +45,23 @@ function vScroll(deltaY, main, dom){
             main.y = a;
           }
         }else{
-          if((parseInt(dom.lastElementChild.style.top, 10) + dom.lastElementChild.scrollHeight + 50) < window.innerHeight){
-            let a = window.innerHeight - dom.lastElementChild.scrollHeight - 50;
+          if((parseInt(dom.lastElementChild.style.top, 10) + dom.lastElementChild.scrollHeight + 100) < window.innerHeight){
+            let a = window.innerHeight - dom.lastElementChild.scrollHeight - 100;
             let topInt = parseInt(dom.lastElementChild.style.top, 10);
             for(const element of dom.children){
               let eTop = parseInt(element.style.top, 10);
               element.style.top = `${eTop + (a - topInt)}px`;
             }
             main.y += (a - topInt);
-            console.log(a,parseInt(dom.lastElementChild.style.top, 10));
           }
         }
       }
-    }else if(((main.y + main.height + 50) > window.innerHeight) && (Math.abs(main.y) < ((main.height / 2) + 50))){
+    }else if(((main.y + main.height + 100) > window.innerHeight) && (Math.abs(main.y) < ((main.height / 2) + 100))){
       main.y -= deltaY;
 
       // enforce scroll limit according to bottom-most content on canvas
-      if((main.y + main.height + 50) < window.innerHeight){
-        main.y = window.innerHeight - main.height - 50;
+      if((main.y + main.height + 100) < window.innerHeight){
+        main.y = window.innerHeight - main.height - 100;
       }
     }
   }else if(deltaY < 0){
@@ -74,9 +83,6 @@ function vScroll(deltaY, main, dom){
        }
 
       }
-
-      
-
     }else{
       // scroll down if canvas has scrollable content above window
       if(main.y < 0){
@@ -85,8 +91,7 @@ function vScroll(deltaY, main, dom){
         // enforce scroll limit according to top position 
         if(main.y > 0){
           main.y = 0;
-        }
-          
+        }     
       }
     }
   }

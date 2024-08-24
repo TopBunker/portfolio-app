@@ -16,15 +16,14 @@
 
   </head>
   <body>
-    <div id="bgCanvas" class="z-n1 bg-transparent" ></div>
-    <div id="dom">
-    </div>
-    <div class="container-fluid bg-transparent z-2">
+    <div id="canvas" class="z-n1 bg-transparent" ></div>
+    <div id="dom"></div>
+    <div class="container-fluid bg-transparent z-1">
       <div id="screen" class="row bg-transparent">
-        <div id="lPanel" class="col-md-2 col-lg-3 bg-transparent z-1">    
-          <div class="">left</div>
+        <div id="lPanel" class="col-md-2 col-lg-3 bg-transparent">
+          <div>left</div>
         </div>
-        <div id="gridPanel" class="col-md-9 col-lg-7 bg-transparent z-0">
+        <div id="gridPanel" class="col-md-9 col-lg-7 bg-transparent">
             <div id="r1" class="row z-0">
               <div id="r1c1" class="col">
                 <div id="r1c1r1" class="row">
@@ -350,14 +349,13 @@
 
             </div>
             </div>
-            <div id="canvas" class="z-1"></div>
         </div>
-        <div id="rPanel" class="col-md-1 col-lg-2 bg-transparent z-1">
-        <div>right</div>
+        <div id="rPanel" class="col-md-1 col-lg-2 bg-transparent">
+          <div>right</div>
         </div>
       </div>
     </div>
-    <div id="topCanvas" class="z-3 bg-transparent" ></div>
+    <div id="topCanvas" class="z-2 bg-transparent" ></div>
     @vite(["/node_modules/bootstrap/dist/js/bootstrap.min.js"])
   </body>
 </html>
