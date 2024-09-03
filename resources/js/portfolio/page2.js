@@ -1,8 +1,8 @@
 
 import {Container} from "pixi.js";
-import {gridify, gridifyCenter, grid, yStrt, xStrt} from "./tools/grid";
-import Page from "./tools/Page";
-import {pixifyText, block} from "./tools/build";
+import {gridify, gridifyCenter, grid, yStrt, xStrt} from "../tools/grid";
+import Page from "../tools/Page";
+import {pixifyText, block} from "../tools/build";
 
 /**
  * Initialise Page Containers

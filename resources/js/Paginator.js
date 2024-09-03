@@ -1,9 +1,9 @@
 
 import {Application, Assets, Container} from "pixi.js";
-import Home from "./pages/home";
-import Two from "./pages/two";
-import Three from "./pages/three";
-import Four from "./pages/four";
+import Home from "./portfolio/page1";
+import Two from "./portfolio/page2";
+import Three from "./portfolio/page3";
+import Four from "./portfolio/page4";
 
 $.when($.ready).then(async () =>
 {
@@ -18,7 +18,17 @@ $.when($.ready).then(async () =>
   // main canvas 
   const body = document.getElementById("canvas");
   const bg = new Application();
-  await bg.init({backgroundAlpha: 0, resizeTo: window, width: window.innerWidth, height: window.innerHeight, powerPreference: "high-performance",  autoDensity: true, antialias: true});
+  await bg.init({
+    backgroundAlpha: 0, 
+    resizeTo: window, 
+    width: window.innerWidth, 
+    height: window.innerHeight, 
+    powerPreference: "high-performance",
+    autoDensity: true,
+    //antialias: false,
+    resolution: window.devicePixelRatio,
+    //imageSmoothingEnabled: false
+  });
   body.appendChild(bg.canvas);
 
   const background = new Container();

@@ -1,7 +1,7 @@
 import {Assets, Container, Sprite} from "pixi.js";
-import {gridify, gridifyCenter, grid, yStrt, xStrt} from "./tools/grid";
-import Page from "./tools/Page";
-import {pixifyText, block} from "./tools/build";
+import {gridify, gridifyCenter, grid, yStrt, xStrt} from "../tools/grid";
+import Page from "../tools/Page";
+import {pixifyText, block} from "../tools/build";
 
 /**
  * backgroundLoad Pixijs Assets
@@ -98,6 +98,7 @@ const page = new Page(null, page3, null, domMedia, ["pg2", "pg4"]);
 
 
 function mView(t, m, b, d){
+    console.log(domMedia.p1);
     page.display(t, m, b, d);
 }
     

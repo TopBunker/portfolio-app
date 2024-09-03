@@ -112,8 +112,11 @@ function gridify(a, col, row){
   a.anchor.set(0);
   a.x = d.x;
   a.y = d.y;
-  a.scale.set(d.scale);
-  scaleToCanvas(a); // if further scaling is needed
+  if(a.width > outer.clientWidth){
+    scaleToCanvas(a);
+  }else{
+    a.scale.set(d.scale);
+  }
   return a;
 }
   
@@ -121,19 +124,19 @@ function gridifyCenter(a,col,row){
   let d = grid[col][row];
   a.x = d.x + (d.width / 2);
   a.y = d.y + (d.height / 2);
-  a.scale.set(d.scale);
-  scaleToCanvas(a); 
+  if(a.width > outer.clientWidth){
+    scaleToCanvas(a);
+  }else{
+    a.scale.set(d.scale);
+  }
   return a;
 }
-
 
 function scaleToCanvas(element){
   let width = element.width;
   let ref = outer.clientWidth - (0.05 * outer.clientWidth);
-  if(width > outer.clientWidth){
-    element.scale.x *= ref/width;
-    element.scale.y *= ref/width;
-  }
+  element.scale.x *= ref/width;
+  element.scale.y *= ref/width;
 }
 
   export {gridify, gridifyCenter, grid, yStrt, xStrt};
