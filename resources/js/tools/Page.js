@@ -2,21 +2,28 @@ import scroll from "./scroll";
 import { domMedia } from "./build";
 
 /**
- * Page Class
+ * Base level encapsulation of webpage object
  */
-
 export default class Page {
 
-  #domMedia; // elements to be placed on DOM
-  #top; // animation and interaction objects for top canvas
-  #main; // main container in main canvas
-  #background; // background container in main canvas
-  #neighbors; // neighbour pages 
+ 
+  #domMedia; 
+  #top; 
+  #main; 
+  #background; 
+  #neighbors;  
 
-  // SEO and related data functions
   #views;
   #clicks;
 
+  /**
+   * 
+   * @param {*} t 
+   * @param {*} m 
+   * @param {*} b 
+   * @param {*} d 
+   * @param {*} n 
+   */
   constructor(t,m,b,d,n) {
     this.#domMedia = d;
     this.#top = t;

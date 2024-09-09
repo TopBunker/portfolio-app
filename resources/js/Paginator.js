@@ -6,18 +6,29 @@ import Three from "./portfolio/page3";
 import Four from "./portfolio/page4";
 
 $.when($.ready).then(async () =>
-{
+{         
   /**
-  * Pixijs Setup 
-  */     
-      
-  // HTML DOM interface: for placing objects directly to dom
+   * DOM element for placing programattically generated content 
+   * @type  {Element}
+   */
   const dom = document.getElementById("dom");    
     
-  // Pixijs DOM interface for canvas elements
-  // main canvas 
+  /**
+   * DOM element for placing Pixijs canvas
+   * @type {Element}
+   */
   const body = document.getElementById("canvas");
+
+  /**
+   *  Pixijs Application
+   * @type {Application}
+   * [website ingres:  Pixijs object encapsulating, and providing an interface for, the canvas element]
+   */
   const bg = new Application();
+
+  /**
+   * Initialise Application with settings and append to DOM
+   */
   await bg.init({
     backgroundAlpha: 0, 
     resizeTo: window, 
@@ -25,19 +36,29 @@ $.when($.ready).then(async () =>
     height: window.innerHeight, 
     powerPreference: "high-performance",
     autoDensity: true,
-    //antialias: false,
+    antialias: false,
     resolution: window.devicePixelRatio,
-    //imageSmoothingEnabled: false
-  });
-  body.appendChild(bg.canvas);
+    imageSmoothingEnabled: true,
+    imageSmoothingQuality: "high"
+  });body.appendChild(bg.canvas);
 
+  /**
+   * Create and add Pixijs Container elements to the stage (root container)
+   * @type {Container}
+   * [element ingres: main website containers for canvas elements; subcontainers = true;]
+   */
   const background = new Container();
   bg.stage.addChildAt(background, 0);
 
   const main = new Container();
   bg.stage.addChildAt(main, 1);
     
-  // top canvas for interactions
+  /**
+   * Define Application with z-index = front to capture user interactions;
+   * @type {Element} screen
+   * @type {Application} top
+   * @type {Container} topScreen
+   */
   const screen = document.getElementById("topCanvas");
   const top = new Application();
   await top.init({backgroundAlpha: 0, resizeTo: window, width: window.innerWidth, height: window.innerHeight});

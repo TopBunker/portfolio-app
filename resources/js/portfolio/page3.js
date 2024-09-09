@@ -3,11 +3,6 @@ import {gridify, gridifyCenter, grid, yStrt, xStrt} from "../tools/grid";
 import Page from "../tools/Page";
 import {pixifyText, block} from "../tools/build";
 
-/**
- * backgroundLoad Pixijs Assets
- */
-Assets.add({alias: "pg3", src: "./storage/images/page3/img1.jpeg" });
-Assets.backgroundLoad("pg3");
 
 /**
  * Initialise Page Containers

@@ -6,8 +6,6 @@ import {pixifyText, block, makeSprite} from "../tools/build";
 /**
  * backgroundLoad Pixijs Assets
  */
-Assets.add({alias: "pg4", src: "./storage/images/page4/img1.jpeg" });
-Assets.backgroundLoad("pg4");
 
 // HTML Text
 let pgrid = grid[0][0];

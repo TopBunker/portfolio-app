@@ -6,7 +6,9 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 import jQuery from 'jquery';
 window.$ = jQuery;
 
-import { Assets } from 'pixi.js';
+import { Assets} from 'pixi.js';
+Assets.add({alias: "pg3", src: "./storage/images/page4/img1.jpeg" });
+Assets.add({alias: "pg4", src: "./storage/images/page4/img1.jpeg" });
 Assets.addBundle("pg5", [
   {alias: "p51", src: "./storage/images/page5/img1.jpeg"},
   {alias: "p52", src: "./storage/images/page5/img2.jpeg"},
