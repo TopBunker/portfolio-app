@@ -1,9 +1,6 @@
 
 import {Application, Assets, Container} from "pixi.js";
-import Home from "./portfolio/page1";
-import Two from "./portfolio/page2";
-import Three from "./portfolio/page3";
-import Four from "./portfolio/page4";
+import Home from "./main/home";
 
 $.when($.ready).then(async () =>
 {         
@@ -70,7 +67,7 @@ $.when($.ready).then(async () =>
   /**
    * Manage pages
    */
-  Four.display(topScreen,main,background,dom);
+  Home.display(topScreen,main,background,dom);
 
 
 /**
