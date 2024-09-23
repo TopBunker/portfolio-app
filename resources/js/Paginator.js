@@ -68,6 +68,7 @@ $.when($.ready).then(async () =>
    * Manage pages
    */
   Home.display(topScreen,main,background,dom);
+  Home.animate();
 
 
 /**

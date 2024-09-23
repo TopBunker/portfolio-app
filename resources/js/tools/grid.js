@@ -132,6 +132,19 @@ function gridifyCenter(a,col,row){
   return a;
 }
 
+function centerPage(a,col,row){
+  let d = grid[col][row];
+  a.anchor.set(0.5);
+  a.x = outer.clientWidth / 2;
+  a.y = outer.clientHeight  / 2;
+  if(a.width > outer.clientWidth){
+    scaleToCanvas(a);
+  }else{
+    a.scale.set(d.scale);
+  }
+  return a;
+}
+
 function scaleToCanvas(element){
   let width = element.width;
   let ref = outer.clientWidth - (0.05 * outer.clientWidth);
@@ -139,4 +152,4 @@ function scaleToCanvas(element){
   element.scale.y *= ref/width;
 }
 
-  export {gridify, gridifyCenter, grid, yStrt, xStrt};
+  export {gridify, gridifyCenter, grid, yStrt, xStrt, centerPage};

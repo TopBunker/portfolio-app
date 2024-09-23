@@ -1,6 +1,6 @@
 
 import {AnimatedSprite, Container, Texture, Assets} from "pixi.js";
-import {gridify, gridifyCenter, grid, yStrt, xStrt} from "../tools/grid";
+import {gridify, gridifyCenter, centerPage, grid, yStrt, xStrt} from "../tools/grid";
 import Page from "../tools/Page";
 import {pixifyText, block} from "../tools/build";
 
@@ -28,15 +28,13 @@ const pD = pixifyText(d, 2, f1);
 /**
  * Build page
 */
-const txtr = await Assets.load("meishi");
+const aniOb = await Assets.load("meishi");
 const seq = Assets.cache.get("meishi").data.animations;
-console.log(seq);
 const ani = AnimatedSprite.fromFrames(seq["frame"]);
-gridify(ani,0,0);
+centerPage(ani, 0, 0);
 
 card.addChild(ani);
 
-    
 const page = new Page(null, card, null, null, ["p1"]);
   
 function mView(t, m, b, d){
@@ -58,6 +56,11 @@ const Home = {
         }else{
             dView(t, m, b, d);
         }
+    },
+    animate : () =>{
+        ani.animationSpeed = 0.3;
+        ani.loop = false;
+        ani.play();
     },
     main : page.main,
     background: page.background,

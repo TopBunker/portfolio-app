@@ -175,5 +175,5 @@ function block(c, x, y){
   shape.stroke(c);
   return shape;
 }
-  
+
 export {pixifyText, block, domMedia}; 
