@@ -6,9 +6,11 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 import jQuery from 'jquery';
 window.$ = jQuery;
 
-import { Assets} from 'pixi.js';
+import {Assets} from 'pixi.js';
 
-Assets.add({alias: "meishi", src: "./storage/images/meishi/meishi-0.json"});
+Assets.add({alias: "name", src: "./storage/images/animations/name/name-0.json"});
+Assets.add({alias: "photo", src: "./storage/images/animations/photo/photo-0.json"});
+Assets.add({alias: "sign", src: "./storage/images/animations/sign/sign.json"});
 Assets.add({alias: "pg3", src: "./storage/images/page4/img1.jpeg" });
 Assets.add({alias: "pg4", src: "./storage/images/page4/img1.jpeg" });
 Assets.addBundle("pg5", [
@@ -46,4 +48,4 @@ Assets.addBundle("pg10", [
   {alias: "p104", src: "./storage/images/page10/img4.jpeg"},
   {alias: "p105", src: "./storage/images/page10/img5.jpeg"}
 ]);
-Assets.backgroundLoad("meishi", "pg3","pg4","pg5", "pg6", "pg7", "pg8", "pg9", "pg10");
+Assets.backgroundLoad("name", "photo", "sign", "pg3","pg4","pg5", "pg6", "pg7", "pg8", "pg9", "pg10");

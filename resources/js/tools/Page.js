@@ -7,10 +7,10 @@ import { domMedia } from "./build";
 export default class Page {
 
  
-  #domMedia; 
   #top; 
   #main; 
   #background; 
+  #domMedia; 
   #neighbors;  
 
   #views;
@@ -25,10 +25,10 @@ export default class Page {
    * @param {*} n 
    */
   constructor(t,m,b,d,n) {
-    this.#domMedia = d;
     this.#top = t;
     this.#main = m;
     this.#background = b;
+    this.#domMedia = d;
     this.#neighbors = n;
   }
 

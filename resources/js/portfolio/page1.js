@@ -102,7 +102,7 @@ function dView(t, m, b, d){
     page.display(t, m, b, d);
 }
 
-const Home = {
+const One = {
     display : (t, m, b, d) => {
         if(window.innerWidth < 768){
             mView(t, m, b, d);
@@ -115,4 +115,4 @@ const Home = {
     top : page.top
 }
 
-export default Home;
+export default One;

@@ -3,17 +3,12 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <title>Portfolio</title>
-
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
-
-        <!-- Styles and scripts-->
-        @vite(["/node_modules/jquery/dist/jquery.js", "resources/js/app.js"])
-        @vite(["/node_modules/bootstrap/dist/css/bootstrap.min.css"])
-
+    <!-- Styles and scripts-->
+    @vite(["resources/js/app.js"])
   </head>
   <body>
     <div id="canvas" class="z-n1 bg-transparent" ></div>
@@ -356,6 +351,5 @@
       </div>
     </div>
     <div id="topCanvas" class="z-2 bg-transparent" ></div>
-    @vite(["/node_modules/bootstrap/dist/js/bootstrap.min.js"])
   </body>
 </html>

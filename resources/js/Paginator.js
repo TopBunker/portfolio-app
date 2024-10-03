@@ -1,6 +1,16 @@
 
-import {Application, Assets, Container} from "pixi.js";
-import Home from "./main/home";
+import {Application, Container} from "pixi.js";
+import Home from "./main/home"; 
+import One from "./portfolio/page1.js"; 
+import Two from "./portfolio/page2.js"; 
+import Three from "./portfolio/page3.js"; 
+import Four from "./portfolio/page4.js"; 
+import Five from "./portfolio/page5.js"; 
+import Six from "./portfolio/page6.js"; 
+import Seven from "./portfolio/page7.js"; 
+import Eight from "./portfolio/page8.js"; 
+import Nine from "./portfolio/page9.js"; 
+import PageX from "./portfolio/pagex.js"; 
 
 $.when($.ready).then(async () =>
 {         
@@ -67,9 +77,12 @@ $.when($.ready).then(async () =>
   /**
    * Manage pages
    */
-  Home.display(topScreen,main,background,dom);
-  Home.animate();
 
+  const dev  = [];
+  const portfolio = [One, Two,  Three, Four, Five, Six, Seven, Eight, Nine, PageX];
+
+  const nav = {"home":Home,  "":One};
+  Home.display(topScreen,main,background,dom);
 
 /**
  * -BUILD pages

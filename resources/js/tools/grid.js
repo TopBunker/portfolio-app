@@ -1,4 +1,3 @@
-
 const outer = document.getElementById("gridPanel");
 let refWidth = outer.clientWidth/9;
 let refHeight = outer.clientHeight/9;
@@ -112,11 +111,6 @@ function gridify(a, col, row){
   a.anchor.set(0);
   a.x = d.x;
   a.y = d.y;
-  if(a.width > outer.clientWidth){
-    scaleToCanvas(a);
-  }else{
-    a.scale.set(d.scale);
-  }
   return a;
 }
   
@@ -124,11 +118,6 @@ function gridifyCenter(a,col,row){
   let d = grid[col][row];
   a.x = d.x + (d.width / 2);
   a.y = d.y + (d.height / 2);
-  if(a.width > outer.clientWidth){
-    scaleToCanvas(a);
-  }else{
-    a.scale.set(d.scale);
-  }
   return a;
 }
 
@@ -137,12 +126,6 @@ function centerPage(a,col,row){
   a.anchor.set(0.5);
   a.x = outer.clientWidth / 2;
   a.y = outer.clientHeight  / 2;
-  if(a.width > outer.clientWidth){
-    scaleToCanvas(a);
-  }else{
-    a.scale.set(d.scale);
-  }
-  return a;
 }
 
 function scaleToCanvas(element){
@@ -152,4 +135,35 @@ function scaleToCanvas(element){
   element.scale.y *= ref/width;
 }
 
-  export {gridify, gridifyCenter, grid, yStrt, xStrt, centerPage};
+function gridScale(element, scale, width, height){
+  scale = scale ? scale : "full";
+
+  let targetWidth = width ? width : document.getElementById("gridPanel").clientWidth;
+  let targetHeight = height ? height : document.getElementById("gridPanel").clientHeight;
+
+  switch (scale) {
+    case "half":
+      targetWidth /= 2;
+      targetHeight /= 2;
+      break;
+
+    case "third":
+      targetWidth /= 3;
+      targetHeight /= 3;
+      break;
+
+    case "thumb": 
+      targetWidth /= 4;
+      targetHeight /= 4;
+      break;
+
+    default:
+    break;
+  }
+
+  let s  = targetWidth / element.width;
+  
+  element.scale = s;
+}
+
+export {gridify, gridifyCenter, grid, yStrt, xStrt, centerPage, gridScale, scaleToCanvas};

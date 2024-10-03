@@ -33,11 +33,11 @@ function domMedia(tagListObject){
  * @param {numbr} height height of the returned Sprite object; scaled according to width if not provided
  * @returns {Promise<Sprite>} Pixijs Sprite Object scaled to specified dimensions (or fullscreen by default)
  */
-export async function makeSprite(texture, scale, width, height){
+async function makeSprite(texture, scale, width, height){
   scale = scale ? scale : "full";
 
   let targetWidth = width ? width : document.getElementById("gridPanel").clientWidth;
-  let targetHeight = height ? height : window.innerHeight;
+  let targetHeight = height ? height : document.getElementById("gridPanel").clientHeight;
 
   switch (scale) {
     case "half":
@@ -176,4 +176,4 @@ function block(c, x, y){
   return shape;
 }
 
-export {pixifyText, block, domMedia}; 
+export {pixifyText, block, domMedia, makeSprite}; 
