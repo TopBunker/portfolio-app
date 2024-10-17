@@ -4,8 +4,17 @@ import Page from "../tools/Page";
 import {pixifyText, block, makeSprite} from "../tools/build";
 
 /**
- * backgroundLoad Pixijs Assets
+ * Initialise Page Containers
  */
+const page4 = new Container();
+page4.x = xStrt();
+page4.y = yStrt();
+
+// get backgroundloaded asset from loader
+let texture  = Assets.load("pg4").then(async () => {
+  let i = await makeSprite(texture, "full");
+  page4.addChild(i);
+});
 
 // HTML Text
 let pgrid = grid[0][0];
@@ -20,44 +29,6 @@ p1.outerHTML = `<p class="domText fw-light text-wrap" style="position:absolute;t
 Those formative experiences culminated in a dynamic career as a freelance writer. 
 </p>`;
 domMedia.p1 = container.lastElementChild;
-
-/**
- * Initialise Page Containers
- */
-const page4 = new Container();
-page4.x = xStrt();
-page4.y = yStrt();
-
-let texture  = await Assets.load("pg4");
-console.log(texture.label);
-let image = Sprite.from(texture);
-
-let img = new Image();
-img.onload = async function(){
-    let ref = document.getElementById("gridPanel").clientWidth;
-    let oc = document.createElement("canvas");
-    
-    let octx = oc.getContext("2d");
-    octx.imageSmoothingEnabled = false;
-
-    let scale = ref < window.innerHeight ? 1 - (ref/window.innerHeight) : 1 - (window.innerHeight/ref);
-
-    oc.width = img.width * scale;
-    oc.height = img.height * scale;
-    octx.drawImage(img, 0, 0, oc.width, oc.height);
-   
-    let txtr = oc.toDataURL("image,jpeg", 1);
-    Assets.add({alias: "i", src: txtr});
-    let t = await Assets.load("i");
-    let ti = Sprite.from(t);
-    ti = gridify(ti, 0, 2);
-    //page4.addChild(ti);
-  }
-  //img.src = texture.label;
-
-//image = gridify(image, 0, 2);
-let i = await makeSprite(texture, "full");
-page4.addChild(i);
 
 const page = new Page(null,page4,null,domMedia,["p3","p5"]);
 

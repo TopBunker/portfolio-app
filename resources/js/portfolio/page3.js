@@ -53,11 +53,12 @@ blox.addChild(block(0x000000, 8, 1).fill(0x000000));
 
 page3.addChild(blox,heading);
 
-let texture = await Assets.load("pg3");
-let image = Sprite.from(texture);
-image = gridify(image, 0, 3);
-page3.addChild(image);
-            
+let texture = Assets.load("pg3").then(() =>{
+  let image = Sprite.from(texture);
+  image = gridify(image, 0, 3);
+  page3.addChild(image);
+});      
+
 // HTML TEXT
 let pGrid = grid[0][8];
 let top = yStrt() + page3.height + 50;
@@ -93,7 +94,6 @@ const page = new Page(null, page3, null, domMedia, ["pg2", "pg4"]);
 
 
 function mView(t, m, b, d){
-    console.log(domMedia.p1);
     page.display(t, m, b, d);
 }
     

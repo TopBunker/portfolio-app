@@ -108,7 +108,7 @@ function quadrant(){
  */
 function gridify(a, col, row){
   let d = grid[col][row];
-  a.anchor.set(0);
+  //a.anchor.set(0);
   a.x = d.x;
   a.y = d.y;
   return a;
