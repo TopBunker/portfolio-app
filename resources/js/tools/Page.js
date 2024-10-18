@@ -37,30 +37,60 @@ export default class Page {
     this._neighbors = n;
   }
 
-  display(top,main,background,dom,scrollFn) {
-    let sFn = scrollFn ? scrollFn : "default";
+  pageScroll(sFn){
+    scroll(sFn, e, main, dom);
+  }
 
-    // page scroll function
-    window.addEventListener("wheel", (e) => {
-      scroll(sFn, e, main, dom);
-    });
+  display(top,main,background,dom,scrollFn) {
 
     if(this._domEl != null){
       domMedia(this._domEl);
     }
     if(this._top != null){
-      top.addChild(this._top);
+      if(top.children.includes(this._top)){
+        this._top.visible = true;
+      }else{
+        top.addChild(this._top);
+      }
     }
     if(this._main != null){
-      main.addChild(this._main);
+      if(main.children.includes(this._main)){
+        this._main.visible = true;
+      }else{
+        main.addChild(this._main);
+      }
     }
     if(this._background != null){
-      background.addChild(this._background);
+      if(background.children.includes(this._background)){
+        this._background.visible = true;
+      }else{
+        background.addChild(this._background);
+      }
     }
+
+    // page scroll function
+    let scroll = scrollFn ? scrollFn : "default";
+    window.addEventListener("wheel", () => {pageScroll(scroll)})
   }
 
-  static #destroy(){
-    this.removeEventListener("wheel", scroll);
+  destroy(scrollFn){
+
+    if(this._domEl != null){
+      //
+    }
+    if(this._top != null){
+      this._top.visible = false;
+    }
+    if(this._main != null){
+     this._main.visible = false;
+    }
+    if(this._background != null){
+      this._background.visible = false;
+    }
+
+    //reset scrolling function
+    let scroll = scrollFn ? scrollFn : "default";
+    window.removeEventListener("wheel", () => {pageScroll(scroll)});
   }
 
   /**

@@ -1,7 +1,8 @@
 
 import {Application, Container, Ticker} from "pixi.js";
+import { wipeScreen } from "./tools/build.js";
 import Home from "./main/home"; 
-import One from "./portfolio/page1.js"; 
+import One from "./portfolio/writer1.js"; 
 /*import Two from "./portfolio/page2.js"; 
 import Three from "./portfolio/page3.js"; 
 import Four from "./portfolio/page4.js"; 
@@ -92,25 +93,52 @@ $.when($.ready).then(async () =>
     
   const topScreen = new Container();
   top.stage.addChild(topScreen);
-    
+
   /**
-   * Manage pages
+   * Page manager
    */
 
   const dev  = [];
-  //const portfolio = [One, Two,  Three, Four, Five, Six, Seven, Eight, Nine, PageX];
+  const portfolioNav = {"1" : One};
   
-  const nav = [Home,One];
-  let current = Home.current;
-  nav[`${current}`].display(topScreen,main,background,dom);
-  window.addEventListener('click',()=>{
-    console.log(current);
-    nav[`${current}`].display(topScreen,main,background,dom);
-  })
+  const nav = {"home": Home, "writer" : portfolioNav, "dev" : dev};
+  let curPage = nav.home;
+  curPage.display(topScreen,main,background,dom);
+  for (const key in curPage.nav) {
+    let  btn = curPage.nav[key];
+    btn.button.on("pointerdown", () => {
+      let process = btn.fn();
+      if(process.destroy == true){
+        wipeScreen(process.transition);
+        curPage.destroy();
+        let  path = process.nextPage.split("/");
+        let nextNode = path[0];
+        let navKeys = Object.keys(nav);
+        if(navKeys.includes(nextNode)){
+          let index = navKeys.indexOf(nextNode);
+          curPage = Object.values(nav)[index];
+        }
+        if(path.length > 1){
+          for (let i = 1; i < (path.length + 1); i++) {
+            let keys = Object.keys(curPage);
+            let n = path[i];
+            if(keys.includes(n)){
+              let index = Object.keys(curPage).indexOf(n);
+              curPage = Object.values(curPage)[index];
+              console.log(path);
+            }
+          }
+        }
+        curPage.display(topScreen,main,background,dom);
+      }
+      
+  });
+
+  }
   
   
  
-  state = nav[`${current}`].state;
+  state = curPage.state;
 
 
   /**

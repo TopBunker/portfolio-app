@@ -9,8 +9,6 @@ import {pixifyText, block} from "../tools/build";
  */
 const page = new Page();
 
-let currentPage = 0;
-
 /**
  * Initialise Page Containers
  */
@@ -38,11 +36,10 @@ const wBtn = new Graphics();
 wBtn.rect(pW.x+xStrt(),pW.y+yStrt(),pW.width,pW.height);
 wBtn.fill({color:"white", alpha:1});
 wBtn.eventMode = 'static';
-//wBtn.hitArea = new Rectangle(pW.x+xStrt(),pW.y+yStrt(),pW.width,pW.height);
-wBtn.on('pointerdown',() => {
-  currentPage=1;
-  console.log('hit');
-});
+wBtn.hitArea = new Rectangle(pW.x+xStrt(),pW.y+yStrt(),pW.width,pW.height);
+const wBtnFn = () => {
+    return {destroy : true, transition: null, nextPage : "writer/1"};
+}
 
 const d = "Developer";
 const pD = pixifyText(d, 0, f1)[0];
@@ -52,6 +49,15 @@ bD.rect(-10,-5,pD.width+20,pD.height+10);
 bD.fill({color:"#7FFF00",alpha:0.7});
 gridify(bD,7,4);
 const dBtn = new Graphics();
+dBtn.rect(pD.x+xStrt(),pD.y+yStrt(),pD.width,pD.height);
+dBtn.fill({color:"white", alpha:1});
+dBtn.eventMode = 'static';
+dBtn.hitArea = new Rectangle(pD.x+xStrt(),pD.y+yStrt(),pD.width,pD.height);
+const dBtnFn = () => {
+    console.log("to dev");
+
+    return {destroy : true, tansition : null};
+}
 
 card.addChild(bW, bD, pW, pD);
 buttons.addChild(wBtn,dBtn);
@@ -83,7 +89,7 @@ const sign = Assets.load("sign").then(async () => {
   const dp = await Assets.load("photo");
   const seq3 = Assets.cache.get("photo").data.animations;
   const dpani = AnimatedSprite.fromFrames(seq3["photo"]);
-  dpani.onRender = () =>  {
+  dpani.onRender = () => {
       dpani.animationSpeed = 0.3;
       dpani.loop = false;
       dpani.play();
@@ -94,7 +100,7 @@ const sign = Assets.load("sign").then(async () => {
   card.addChild(sani, nani, dpani);
 });
 
-page.construct(buttons, card, null, null, ["p1"]);
+page.construct(buttons, card, null, null, ["writer","dev"]);
 
 /**
  * Page mobile view definition
@@ -120,6 +126,9 @@ function dView(t, m, b, d){
     page.display(t, m, b, d);
 }
 
+/**
+ * EXPORT
+ */
 const Home = {
     display : (t, m, b, d) => {
         if(window.innerWidth < 768){
@@ -129,14 +138,15 @@ const Home = {
         }
     },
     state : pageState,
-    current : currentPage,
+    nav : {"writer" : {"button" : wBtn, "fn" : wBtnFn}, "dev" : {"button" :  dBtn, "fn" : dBtnFn}},
     x : page.x,
     y : page.y,
-    scale : page.scale
+    scale : page.scale,
+    destroy: () => {page.destroy()}
 }
 
 /**
- * 
+ * TICKER Fn
  */
 let c = 1, i = 1, c1 = 1, i1 = 1;
 function pageState(delta){

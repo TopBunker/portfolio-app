@@ -25,6 +25,10 @@ function domMedia(tagListObject){
   }
 }
 
+function wipeScreen(transition,curPage,nexPage){
+
+}
+
 /**
  * Create a scaled Pixijs Sprite object from an image
  * @param {string} texture texture to return as Pixijs Sprite, scaling as necessary
@@ -176,4 +180,4 @@ function block(c, x, y){
   return shape;
 }
 
-export {pixifyText, block, domMedia, makeSprite}; 
+export {pixifyText, block, domMedia, makeSprite, wipeScreen}; 
