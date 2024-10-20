@@ -1,4 +1,3 @@
-
 import {AnimatedSprite, Container, Texture, Assets, Graphics, Rectangle, Circle} from "pixi.js";
 import {gridify, gridifyCenter, centerPage, grid, yStrt, xStrt, gridScale, scaleToCanvas} from "../tools/grid";
 import Page from "../tools/Page";
@@ -10,7 +9,7 @@ import {pixifyText, block} from "../tools/build";
 const page = new Page();
 
 /**
- * Initialise Page Containers
+ * Initialise Page Pixijs containers
  */
 const card = new Container();
 card.x = xStrt();
@@ -29,14 +28,14 @@ const w = "Writer";
 const pW = pixifyText(w, 0, f1,)[0];
 gridify(pW, 1, 4);
 const bW = new Graphics();
-bW.rect(-10,-5,pW.width+20,pW.height+10);
-bW.fill({color:"#B8860B",alpha:0.7});
-gridify(bW,1,4);
+bW.rect(-10, -5, pW.width + 20, pW.height + 10);
+bW.fill({color: "#B8860B", alpha: 0.7});
+gridify(bW, 1, 4);
 const wBtn = new Graphics();
-wBtn.rect(pW.x+xStrt(),pW.y+yStrt(),pW.width,pW.height);
-wBtn.fill({color:"white", alpha:1});
+wBtn.rect(pW.x + xStrt(), pW.y + yStrt(), pW.width, pW.height);
+wBtn.fill({color: "white", alpha: 1});
 wBtn.eventMode = 'static';
-wBtn.hitArea = new Rectangle(pW.x+xStrt(),pW.y+yStrt(),pW.width,pW.height);
+wBtn.hitArea = new Rectangle(pW.x + xStrt() - 10, pW.y + yStrt() -5, pW.width + 20, pW.height + 10);
 const wBtnFn = () => {
     return {destroy : true, transition: null, nextPage : "writer/1"};
 }
