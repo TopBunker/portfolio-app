@@ -23,21 +23,36 @@ const blocks = new Container();
  * Set page buttons
 */
 let f1 = {size: 22};
+let instructions = {destroy: null, transition: null, nextPage: null};
 
 const w = "Writer";
 const pW = pixifyText(w, 0, f1,)[0];
 gridify(pW, 1, 4);
 const bW = new Graphics();
+<<<<<<< HEAD
 bW.rect(-10, -5, pW.width + 20, pW.height + 10);
 bW.fill({color: "#B8860B", alpha: 0.7});
 gridify(bW, 1, 4);
 const wBtn = new Graphics();
 wBtn.rect(pW.x + xStrt(), pW.y + yStrt(), pW.width, pW.height);
 wBtn.fill({color: "white", alpha: 1});
+=======
+bW.rect(-10,-5,pW.width+20,pW.height+10);
+bW.fill({color:"#B8860B",alpha:0.5});
+gridify(bW,1,4);
+const wBtn = new Graphics();
+wBtn.rect(pW.x+xStrt(),pW.y+yStrt(),pW.width,pW.height);
+wBtn.fill({color:"white", alpha:0});
+>>>>>>> bff6e2c (portfolio add)
 wBtn.eventMode = 'static';
 wBtn.hitArea = new Rectangle(pW.x + xStrt() - 10, pW.y + yStrt() -5, pW.width + 20, pW.height + 10);
 const wBtnFn = () => {
-    return {destroy : true, transition: null, nextPage : "writer/1"};
+  
+  instructions.destroy = true;
+  instructions.transition = null;
+  instructions.nextPage  = "writer/1";
+  
+  return instructions;
 }
 
 const d = "Developer";
@@ -45,17 +60,21 @@ const pD = pixifyText(d, 0, f1)[0];
 gridify(pD, 7, 4);
 const bD = new Graphics();
 bD.rect(-10,-5,pD.width+20,pD.height+10);
-bD.fill({color:"#7FFF00",alpha:0.7});
+bD.fill({color:"#7FFF00",alpha:0.5});
 gridify(bD,7,4);
 const dBtn = new Graphics();
-dBtn.rect(pD.x+xStrt(),pD.y+yStrt(),pD.width,pD.height);
-dBtn.fill({color:"white", alpha:1});
+dBtn.rect(pD.x+xStrt()-60,pD.y+yStrt(),pD.width,pD.height);
+dBtn.fill({color:"white", alpha:0});
 dBtn.eventMode = 'static';
 dBtn.hitArea = new Rectangle(pD.x+xStrt(),pD.y+yStrt(),pD.width,pD.height);
 const dBtnFn = () => {
     console.log("to dev");
 
-    return {destroy : true, tansition : null};
+    instructions.destroy = true;
+    instructions.transition = null;
+    instructions.nextPage = "dev";
+
+    return instructions;
 }
 
 card.addChild(bW, bD, pW, pD);

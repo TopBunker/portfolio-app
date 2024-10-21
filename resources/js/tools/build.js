@@ -25,7 +25,7 @@ function domMedia(tagListObject){
   }
 }
 
-function wipeScreen(transition,curPage,nexPage){
+function wipeScreen(transition){
 
 }
 
@@ -37,7 +37,7 @@ function wipeScreen(transition,curPage,nexPage){
  * @param {numbr} height height of the returned Sprite object; scaled according to width if not provided
  * @returns {Promise<Sprite>} Pixijs Sprite Object scaled to specified dimensions (or fullscreen by default)
  */
-async function makeSprite(texture, scale, width, height){
+async function makeSprite(texture, width, height, scale){
   scale = scale ? scale : "full";
 
   let targetWidth = width ? width : document.getElementById("gridPanel").clientWidth;
@@ -64,8 +64,8 @@ async function makeSprite(texture, scale, width, height){
   }
   
   let i = await autoScaler(texture, targetWidth);
-  Assets.add({alias: "i", src: i});
-  let t = await Assets.load("i");
+  //Assets.add({alias: "i", src: i});
+  let t = await Assets.load(i);
   return Sprite.from(t);
 }
 
@@ -117,7 +117,7 @@ async function autoScaler(texture, targetWidth, targetHeight){
   finalCan.imageSmoothingEnabled = false;
 
   finalCan.width = targetWidth;
-  finalCan.height = targetHeight ? targetHeight : h  - (w  - targetWidth);
+  finalCan.height = targetHeight ? targetHeight : Math.floor(h * Math.pow(scale, (steps - 1)));
 
   fctx.drawImage(canvas, 0, 0, Math.floor(w * Math.pow(scale, (steps - 1))), Math.floor(h * Math.pow(scale, (steps - 1))), 
                          0, 0, finalCan.width, finalCan.height);

@@ -52,13 +52,6 @@ $.when($.ready).then(async () =>
   });body.appendChild(bg.canvas);
 
   /**
-   * Start Ticker
-   */
-
-  bg.ticker.add((delta)=>{update(delta)});
-  console.log(bg.ticker);
-
-  /**
    * Create and add Pixijs Container elements to the stage (root container)
    * @type {Container}
    * [element ingres: main website containers for canvas elements; subcontainers = true;]
@@ -68,6 +61,8 @@ $.when($.ready).then(async () =>
 
   const main = new Container();
   bg.stage.addChildAt(main, 1);
+
+  bg.ticker.add((delta)=>{update(delta)});
     
   /**
    * Define Application with z-index = front to capture user interactions;
@@ -125,14 +120,12 @@ $.when($.ready).then(async () =>
             if(keys.includes(n)){
               let index = Object.keys(curPage).indexOf(n);
               curPage = Object.values(curPage)[index];
-              console.log(path);
             }
           }
         }
         curPage.display(topScreen,main,background,dom);
       }
-      
-  });
+    });
 
   }
   
@@ -146,11 +139,12 @@ $.when($.ready).then(async () =>
    */
 
   function update(delta){
+    delta.autoStart = false;
     state(delta);
   
   }
 
   function rest(delta){
-    delta.autoStart = false;
+    delta.start();
   }
 });

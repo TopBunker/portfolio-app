@@ -29,16 +29,17 @@ export default class Page {
    * @param {*} d page elements attached to the HTML DOM
    * @param {*} n pages that can be navigated to from this page
    */
-  construct(t,m,b,d,n) {
+  construct(t,m,b,d,n,s) {
     this._top = t;
     this._main = m;
     this._background = b;
     this._domEl = d;
     this._neighbors = n;
+    this._scroll = s ? s : "default";
   }
 
-  pageScroll(sFn){
-    scroll(sFn, e, main, dom);
+  pageScroll(sFn,e){
+    scroll(sFn, e, this._main, this._domEl);
   }
 
   display(top,main,background,dom,scrollFn) {
@@ -69,8 +70,8 @@ export default class Page {
     }
 
     // page scroll function
-    let scroll = scrollFn ? scrollFn : "default";
-    window.addEventListener("wheel", () => {pageScroll(scroll)})
+    this._scroll = scrollFn ? scrollFn : "default";
+    window.addEventListener("wheel", (event) => {this.pageScroll(this._scroll,event)})
   }
 
   destroy(scrollFn){
@@ -89,8 +90,7 @@ export default class Page {
     }
 
     //reset scrolling function
-    let scroll = scrollFn ? scrollFn : "default";
-    window.removeEventListener("wheel", () => {pageScroll(scroll)});
+    window.removeEventListener("wheel", (event) => {pageScroll(this._scroll,event)});
   }
 
   /**
@@ -119,7 +119,7 @@ export default class Page {
 
   domScale(s){
     let val = s * 100;
-    let vals = Object.values(tagListObject);
+    let vals = Object.values(this._domEl);
     let element = vals[0];
     if(element.nodeName == "P"){
       element.style.fontSize = `${val}%`; 
@@ -146,8 +146,8 @@ export default class Page {
   set x(val){
     let distance = val - this._x;
     this._x = val;
-    pX(distance);
-    domX(distance);
+    this.pX(distance);
+    this.domX(distance);
   }
 
   pX(dis){
@@ -163,7 +163,7 @@ export default class Page {
   }
 
   domX(dis){
-    let vals = Object.values(tagListObject);
+    let vals = Object.values(this._domEl);
     for(i = 0; i < vals.length; i++){
       let element = vals[i];
       let leftInt = parseInt(element.style.left, 10);
@@ -177,8 +177,8 @@ export default class Page {
   set y(val){
     let distance = val - this._y;
     this._y = val;
-    pY(distance);
-    domY(distance);
+    this.pY(distance);
+    this.domY(distance);
   }
 
   pY(dis){
@@ -194,7 +194,7 @@ export default class Page {
   }
 
   domY(dis){
-    let vals = Object.values(tagListObject);
+    let vals = Object.values(this._domEl);
     for(i = 0; i < vals.length; i++){
       let element = vals[i];
       let topInt = parseInt(element.style.top, 10);

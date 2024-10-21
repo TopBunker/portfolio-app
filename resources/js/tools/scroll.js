@@ -23,7 +23,7 @@ export default function scroll(scroll, e, main,dom)
 function vScroll(deltaY, main, dom){
   // deltaY > 0 : scrolling down the page; element.y decreases to move content up
   if(deltaY > 0){
-    if(dom.children.length > 0){
+    if(dom){
       // check for content below window
       if(((parseInt(dom.lastElementChild.style.top, 10) + dom.lastElementChild.scrollHeight + 100) > window.innerHeight) || ((main.y + main.height + 100) > window.innerHeight)){
         
@@ -56,16 +56,16 @@ function vScroll(deltaY, main, dom){
           }
         }
       }
-    }else if(((main.y + main.height + 100) > window.innerHeight) && (Math.abs(main.y) < ((main.height / 2) + 100))){
+    }else if(((main.y + main.height + 100) > window.innerHeight) /*&& (Math.abs(main.y) < ((main.height / 2) + 100))*/){
       main.y -= deltaY;
-
+      
       // enforce scroll limit according to bottom-most content on canvas
       if((main.y + main.height + 100) < window.innerHeight){
         main.y = window.innerHeight - main.height - 100;
       }
     }
   }else if(deltaY < 0){
-    if(dom.hasChildNodes){
+    if(dom){
       // scroll up if content present off screen 
       if((main.y < 0)){
         main.y -= deltaY;
