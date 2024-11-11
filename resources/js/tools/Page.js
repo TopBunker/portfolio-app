@@ -42,30 +42,30 @@ export default class Page {
     scroll(sFn, e, this._main, this._domEl);
   }
 
-  display(top,main,background,dom,scrollFn) {
+  display(top, main, background, scrollFn) {
 
-    if(this._domEl != null){
+    if(this.domMedia != null){
       domMedia(this._domEl);
     }
-    if(this._top != null){
-      if(top.children.includes(this._top)){
-        this._top.visible = true;
+    if(this.top != null){
+      if(top.children.includes(this.top)){
+        this.top.visible = true;
       }else{
-        top.addChild(this._top);
+        top.addChild(this.top);
       }
     }
-    if(this._main != null){
-      if(main.children.includes(this._main)){
-        this._main.visible = true;
+    if(this.main != null){
+      if(main.children.includes(this.main)){
+        this.main.visible = true;
       }else{
-        main.addChild(this._main);
+        main.addChild(this.main);
       }
     }
-    if(this._background != null){
-      if(background.children.includes(this._background)){
-        this._background.visible = true;
+    if(this.background != null){
+      if(background.children.includes(this.background)){
+        this.background.visible = true;
       }else{
-        background.addChild(this._background);
+        background.addChild(this.background);
       }
     }
 
@@ -75,18 +75,17 @@ export default class Page {
   }
 
   destroy(scrollFn){
-
-    if(this._domEl != null){
+    if(this.domMedia != null){
       //
     }
-    if(this._top != null){
-      this._top.visible = false;
+    if(this.top != null){
+      this.top.visible = false;
     }
-    if(this._main != null){
-     this._main.visible = false;
+    if(this.main != null){
+     this.main.visible = false;
     }
-    if(this._background != null){
-      this._background.visible = false;
+    if(this.background != null){
+      this.background.visible = false;
     }
 
     //reset scrolling function
@@ -244,7 +243,7 @@ export default class Page {
   }
 
   get domMedia(){
-    return this._domMedia;
+    return this._domEl;
   }
 
   

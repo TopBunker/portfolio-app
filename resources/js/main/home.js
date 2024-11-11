@@ -3,51 +3,39 @@ import {gridify, gridifyCenter, centerPage, grid, yStrt, xStrt, gridScale, scale
 import Page from "../tools/Page";
 import {pixifyText, block} from "../tools/build";
 
-/**
- * Initialise page
- */
 const page = new Page();
 
-/**
- * Initialise Page Pixijs containers
- */
+//main page container
 const card = new Container();
 card.x = xStrt();
 card.y = yStrt();
 
+//topScreen container
 const buttons = new Container();
-const blocks = new Container();
 
 
 /**
- * Set page buttons
-*/
+ * Page buttons
+ */
 let f1 = {size: 22};
 let instructions = {destroy: null, transition: null, nextPage: null};
 
+//writer nav button
 const w = "Writer";
 const pW = pixifyText(w, 0, f1,)[0];
 gridify(pW, 1, 4);
+
 const bW = new Graphics();
-<<<<<<< HEAD
-bW.rect(-10, -5, pW.width + 20, pW.height + 10);
-bW.fill({color: "#B8860B", alpha: 0.7});
-gridify(bW, 1, 4);
-const wBtn = new Graphics();
-wBtn.rect(pW.x + xStrt(), pW.y + yStrt(), pW.width, pW.height);
-wBtn.fill({color: "white", alpha: 1});
-=======
 bW.rect(-10,-5,pW.width+20,pW.height+10);
 bW.fill({color:"#B8860B",alpha:0.5});
 gridify(bW,1,4);
+
 const wBtn = new Graphics();
-wBtn.rect(pW.x+xStrt(),pW.y+yStrt(),pW.width,pW.height);
+wBtn.rect(pW.x+xStrt()+30,pW.y+yStrt(),pW.width,pW.height);
 wBtn.fill({color:"white", alpha:0});
->>>>>>> bff6e2c (portfolio add)
-wBtn.eventMode = 'static';
-wBtn.hitArea = new Rectangle(pW.x + xStrt() - 10, pW.y + yStrt() -5, pW.width + 20, pW.height + 10);
+wBtn.eventMode = "static";
+wBtn.cursor = "pointer";
 const wBtnFn = () => {
-  
   instructions.destroy = true;
   instructions.transition = null;
   instructions.nextPage  = "writer/1";
@@ -55,21 +43,22 @@ const wBtnFn = () => {
   return instructions;
 }
 
+//developer nav button
 const d = "Developer";
 const pD = pixifyText(d, 0, f1)[0];
 gridify(pD, 7, 4);
+
 const bD = new Graphics();
 bD.rect(-10,-5,pD.width+20,pD.height+10);
 bD.fill({color:"#7FFF00",alpha:0.5});
 gridify(bD,7,4);
+
 const dBtn = new Graphics();
 dBtn.rect(pD.x+xStrt()-60,pD.y+yStrt(),pD.width,pD.height);
 dBtn.fill({color:"white", alpha:0});
-dBtn.eventMode = 'static';
-dBtn.hitArea = new Rectangle(pD.x+xStrt(),pD.y+yStrt(),pD.width,pD.height);
+dBtn.eventMode = "static";
+dBtn.cursor = "pointer";
 const dBtnFn = () => {
-    console.log("to dev");
-
     instructions.destroy = true;
     instructions.transition = null;
     instructions.nextPage = "dev";
@@ -82,7 +71,7 @@ buttons.addChild(wBtn,dBtn);
 
 /**
  * Build page
-*/
+ */
 const sign = Assets.load("sign").then(async () => {
   const seq1 = Assets.cache.get("sign").data.animations;
   const sani = AnimatedSprite.fromFrames(seq1["sign"]);
@@ -121,19 +110,22 @@ const sign = Assets.load("sign").then(async () => {
 page.construct(buttons, card, null, null, ["writer","dev"]);
 
 /**
- * Page mobile view definition
- * @param {*} t 
- * @param {*} m 
- * @param {*} b 
- * @param {*} d 
+ * Page mobile view
+ * @param {*} t topScreen container
+ * @param {*} m main container
+ * @param {*} b background container
+ * @param {*} d dom elements 
  */
 function mView(t, m, b, d){
-    pW.x+=30;
-    bW.x+=30;
-    wBtn.x+=30;
-    pD.x-=60;
-    bD.x-=60;
-    page.display(t, m, b, d);
+  gridify(pW, 1, 4);
+  gridify(bW,1,4);
+  gridify(pD, 7, 4);
+  gridify(bD,7,4);
+  pW.x+=30;
+  bW.x+=30;
+  pD.x-=60;
+  bD.x-=60;
+  page.display(t, m, b, d);
 }
     
 function tView(t, m, b ,d){

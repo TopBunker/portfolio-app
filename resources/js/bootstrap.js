@@ -13,18 +13,6 @@ Assets.add({alias: "photo", src: "./storage/images/animations/photo/photo-0.json
 Assets.add({alias: "sign", src: "./storage/images/animations/sign/sign.json"});
 Assets.add({alias: "pg3", src: "./storage/images/page4/img1.jpeg" });
 Assets.add({alias: "pg4", src: "./storage/images/page4/img1.jpeg" });
-Assets.addBundle("portfolio", [
-  {alias: "p1", src: "./storage/images/portfolio_images/portfolio_1.png"},
-  {alias: "p2", src: "./storage/images/portfolio_images/portfolio_2.png"},
-  {alias: "p3", src: "./storage/images/portfolio_images/portfolio_3.png"},
-  {alias: "p4", src: "./storage/images/portfolio_images/portfolio_4.png"},
-  {alias: "p5", src: "./storage/images/portfolio_images/portfolio_5.png"},
-  {alias: "p6", src: "./storage/images/portfolio_images/portfolio_6.png"},
-  {alias: "p7", src: "./storage/images/portfolio_images/portfolio_7.png"},
-  {alias: "p8", src: "./storage/images/portfolio_images/portfolio_8.png"},
-  {alias: "p9", src: "./storage/images/portfolio_images/portfolio_9.png"},
-  {alias: "p10", src: "./storage/images/portfolio_images/portfolio_10.png"},
-]);
 Assets.addBundle("pg5", [
   {alias: "p51", src: "./storage/images/page5/img1.jpeg"},
   {alias: "p52", src: "./storage/images/page5/img2.jpeg"},

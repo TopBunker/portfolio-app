@@ -1,28 +1,31 @@
+/**
+ * GRID SYSTEM 
+ */
+const grid = gridCoordinates();  // object Array of 81 (9/9) coordinate objects defining the grid system;  acccessed: grid[col][row]
+
+//HTML Dom grid (9/9)
 const outer = document.getElementById("gridPanel");
 let refWidth = outer.clientWidth/9;
 let refHeight = outer.clientHeight/9;
 
-//scale factor
 let xFactor = window.innerWidth < window.innerHeight ? 0.05 : 0.15;
 let yFactor = window.innerWidth < window.innerHeight ? 0.1 : 0.08;
 let xStrt = () => window.innerWidth < window.innerHeight ? xFactor * window.innerWidth : xFactor * window.innerHeight; 
 let yStrt = () => window.innerWidth < window.innerHeight ? yFactor * window.innerHeight : yFactor * window.innerWidth; 
 
 /**
- * GRID SYSTEM 
- */
-const grid = gridCoordinates();  // object Array of 81 (9/9) coordinate objects defining the grid system;  acccessed: grid[col][row]
-
-/**
  * -BUILD grid 
- * @returns {Object[]} :grid coordinates top left to bottom right; [col][row].property
+ * @param {number} col number of columns (default: 9)
+ * @param {number} row number of rows (default: 9)
+ * @returns {Object[]} grid coordinates top left to bottom right; [col][row].property
  */
-function gridCoordinates(width, height){
+function gridCoordinates(col, row){
   let grd = [];
   let scale = (2 * window.innerWidth) < window.innerHeight ? 1 : 0.75;
   scale = window.innerWidth >= 1919 ? 2 : (window.innerWidth >= 768 ? 1 : scale);
   
   let count = 0;
+
   while (count < 9) {
     let col = [];
   

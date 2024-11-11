@@ -64,7 +64,6 @@ async function makeSprite(texture, width, height, scale){
   }
   
   let i = await autoScaler(texture, targetWidth);
-  //Assets.add({alias: "i", src: i});
   let t = await Assets.load(i);
   return Sprite.from(t);
 }

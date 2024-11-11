@@ -2,7 +2,7 @@
 import {Application, Container, Ticker} from "pixi.js";
 import { wipeScreen } from "./tools/build.js";
 import Home from "./main/home"; 
-import One from "./portfolio/writer1.js"; 
+import One from "./portfolio/page1.js"; 
 /*import Two from "./portfolio/page2.js"; 
 import Three from "./portfolio/page3.js"; 
 import Four from "./portfolio/page4.js"; 
@@ -13,17 +13,24 @@ import Eight from "./portfolio/page8.js";
 import Nine from "./portfolio/page9.js"; 
 import PageX from "./portfolio/pagex.js";*/
 
+/**
+ * Pixijs containers for adding canvas elements
+ * @type {Container}
+ */
+const background = new Container();
+const main = new Container();
+const topScreen = new Container();
+
 $.when($.ready).then(async () =>
 { 
-  let state = rest;
   /**
-   * DOM element for placing programattically generated content 
+   * DOM element for placing programmatically generated content 
    * @type  {Element}
    */
   const dom = document.getElementById("dom");    
     
   /**
-   * DOM element for placing Pixijs canvas
+   * DOM element containing Pixijs canvas
    * @type {Element}
    */
   const body = document.getElementById("canvas");
@@ -31,13 +38,10 @@ $.when($.ready).then(async () =>
   /**
    *  Pixijs Application
    * @type {Application}
-   * [website ingres:  Pixijs object encapsulating, and providing an interface for, the canvas element]
+   * interface for Pixijs canvas
    */
   const bg = new Application();
 
-  /**
-   * Initialise Application with settings and append to DOM
-   */
   await bg.init({
     backgroundAlpha: 0, 
     resizeTo: window, 
@@ -49,23 +53,18 @@ $.when($.ready).then(async () =>
     resolution: window.devicePixelRatio,
     imageSmoothingEnabled: true,
     imageSmoothingQuality: "high"
-  });body.appendChild(bg.canvas);
+  }); 
+  body.appendChild(bg.canvas);
 
-  /**
-   * Create and add Pixijs Container elements to the stage (root container)
-   * @type {Container}
-   * [element ingres: main website containers for canvas elements; subcontainers = true;]
-   */
-  const background = new Container();
+  //add containers to canvas
   bg.stage.addChildAt(background, 0);
-
-  const main = new Container();
   bg.stage.addChildAt(main, 1);
 
+  //initialise Pixijs ticker
   bg.ticker.add((delta)=>{update(delta)});
     
   /**
-   * Define Application with z-index = front to capture user interactions;
+   * Pixijs Application with z-index = top to capture user interactions
    * @type {Element} screen
    * @type {Application} top
    * @type {Container} topScreen
@@ -86,19 +85,17 @@ $.when($.ready).then(async () =>
   });
   screen.appendChild(top.canvas);
     
-  const topScreen = new Container();
   top.stage.addChild(topScreen);
 
   /**
    * Page manager
    */
+  curPage.display(topScreen,main,background);
+  history.pushState(navTracker,null,"#home"); 
+  state = curPage.state;
 
-  const dev  = [];
-  const portfolioNav = {"1" : One};
-  
-  const nav = {"home": Home, "writer" : portfolioNav, "dev" : dev};
-  let curPage = nav.home;
-  curPage.display(topScreen,main,background,dom);
+  //setup page's navigation buttons
+  //
   for (const key in curPage.nav) {
     let  btn = curPage.nav[key];
     btn.button.on("pointerdown", () => {
@@ -123,28 +120,78 @@ $.when($.ready).then(async () =>
             }
           }
         }
-        curPage.display(topScreen,main,background,dom);
+        curPage.display(topScreen,main,background);
+        state = curPage.state;
+        navTracker = navTracker + "#" + process.nextPage;
+        history.pushState(navTracker,null,`#${process.nextPage}`);
       }
     });
-
-  }
-  
-  
- 
-  state = curPage.state;
-
-
-  /**
-   * TICKER
-   */
-
-  function update(delta){
-    delta.autoStart = false;
-    state(delta);
-  
   }
 
-  function rest(delta){
-    delta.start();
-  }
 });
+
+/**
+ * 
+ */
+ $(window).on("popstate", (event)=>{
+  curPage.destroy();
+  curPage = navigate(location.hash);
+  curPage.display(topScreen,main,background);
+  state = curPage.state;
+  history.pushState(navTracker,null,`${location.hash}`);
+});
+
+/**
+ * NAVIGATION
+ */
+const dev  = {};
+const portfolioNav = {"1" : One};
+  
+const nav = {"home": Home, "writer" : portfolioNav, "dev" : dev};
+
+let curPage = nav.home;
+
+let navTracker = "home";
+
+/**
+ * @param {string} hash string representing the current page within the app 
+ * @returns {Object} page object resolved from the hash string
+ */
+function navigate(hash){
+  let  path = hash.replaceAll("#","").split("/");
+  let nextNode = path[0];
+  let navKeys = Object.keys(nav);
+  let newPage = {};
+  if(navKeys.includes(nextNode)){
+    let index = navKeys.indexOf(nextNode);
+    newPage = Object.values(nav)[index];
+  }
+  if(path.length > 1){
+    for (let i = 1; i < (path.length + 1); i++) {
+      let keys = Object.keys(newPage);
+      let n = path[i];
+      if(keys.includes(n)){
+        let index = Object.keys(newPage).indexOf(n);
+        newPage = Object.values(newPage)[index];
+      }
+    }
+  }
+  return newPage;
+}
+
+
+/**
+ * TICKER
+ */
+
+let state = rest;
+
+function update(delta){
+  delta.autoStart = false;
+  state(delta);
+
+}
+
+function rest(delta){
+  delta.start();
+}
